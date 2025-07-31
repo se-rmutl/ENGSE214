@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerable Comment System</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f0f0f0; color: #333; }
+        #comments-container { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; min-height: 100px; background-color: white; border-radius: 5px;}
+        .comment { border-bottom: 1px solid #eee; padding: 8px 0; }
+        .comment:last-child { border-bottom: none; }
+        form { display: flex; flex-direction: column; gap: 10px; }
+        input, textarea, button { padding: 10px; font-size: 1rem; border-radius: 5px; border: 1px solid #ccc; }
+        button { background-color: #dc3545; color: white; cursor: pointer; border: none; }
+    </style>
+</head>
+<body>
+    <h1>แสดงความคิดเห็น (เวอร์ชันมีช่องโหว่)</h1>
+    <div id="comments-container"></div>
+    <hr style="margin: 20px 0;">
+    <h2>โพสต์คอมเมนต์ใหม่</h2>
+    <form id="comment-form">
+        <input type="text" id="name-input" placeholder="ชื่อ" required>
+        <textarea id="comment-input" placeholder="ความคิดเห็น" required></textarea>
+        <button type="submit">โพสต์</button>
+    </form>
+    <script src="app.vulnerable.js"></script>
+</body>
+</html>
