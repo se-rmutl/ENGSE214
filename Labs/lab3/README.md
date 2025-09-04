@@ -1,4 +1,4 @@
-# Hands-on Security Testing & Implementation
+# LAB3: Hands-on Security Testing & Implementation (งานกลุ่ม)
 
 **เป้าหมาย:** สร้างเว็บแอปพลิเคชันที่มีช่องโหว่เจตนา แล้วแก้ไขให้ปลอดภัย  
 **เวลาที่ใช้:** 3-4 ชั่วโมง  
