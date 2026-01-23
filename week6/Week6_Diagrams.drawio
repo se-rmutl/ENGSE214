@@ -1,0 +1,439 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0" pages="6">
+  <diagram name="Alice-Bob-Eve Scenario (Eavesdropping)" id="N-Bq-S2BvJG8SmTtkwDH">
+    <mxGraphModel dx="1257" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="alice" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Alice&#xa;(Sender)" vertex="1">
+          <mxGeometry height="120" width="60" x="120" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="bob" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Bob&#xa;(Receiver)" vertex="1">
+          <mxGeometry height="120" width="60" x="720" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="eve" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Eve&#xa;(Eavesdropper)" vertex="1">
+          <mxGeometry height="120" width="60" x="420" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="message1" edge="1" parent="1" source="alice" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#d79b00;" target="bob" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="messageLabel" connectable="0" parent="message1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Message: &#39;Hello Bob!&#39;" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eavesdrop1" edge="1" parent="1" source="eve" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#b85450;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="450" y="260" as="sourcePoint" />
+            <mxPoint x="450" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eaveLabel" connectable="0" parent="eavesdrop1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fillColor=#f8cecc;strokeColor=#b85450;" value="Intercepts&#xa;Message" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="threat1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="❌ No Encryption&#xa;Eve can read message!" vertex="1">
+          <mxGeometry height="60" width="180" x="360" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="solution" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="✅ With Encryption&#xa;Eve cannot read!" vertex="1">
+          <mxGeometry height="60" width="180" x="360" y="560" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="kcw8-uMJnLwRx49t4SOG" name="Symmetric Encryption Diagram">
+    <mxGraphModel dx="1257" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" value="SYMMETRIC ENCRYPTION" vertex="1">
+          <mxGeometry height="40" width="300" x="360" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="alice" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Alice" vertex="1">
+          <mxGeometry height="100" width="50" x="120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="plaintext1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Plaintext&#xa;&#39;HELLO&#39;" vertex="1">
+          <mxGeometry height="60" width="100" x="100" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="encrypt" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Encrypt&#xa;with Key 🔑" vertex="1">
+          <mxGeometry height="100" width="120" x="280" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1" edge="1" parent="1" source="plaintext1" style="endArrow=classic;html=1;strokeWidth=2;" target="encrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="key1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="🔑 Key&#xa;(Same!)" vertex="1">
+          <mxGeometry height="60" width="100" x="290" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="keyLine1" edge="1" parent="1" source="key1" style="endArrow=classic;html=1;strokeWidth=1;dashed=1;" target="encrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ciphertext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Ciphertext&#xa;&#39;@#$%^&#39;" vertex="1">
+          <mxGeometry height="60" width="100" x="500" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2" edge="1" parent="1" source="encrypt" style="endArrow=classic;html=1;strokeWidth=2;" target="ciphertext" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="decrypt" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Decrypt&#xa;with Key 🔑" vertex="1">
+          <mxGeometry height="100" width="120" x="680" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3" edge="1" parent="1" source="ciphertext" style="endArrow=classic;html=1;strokeWidth=2;" target="decrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="key2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="🔑 Key&#xa;(Same!)" vertex="1">
+          <mxGeometry height="60" width="100" x="690" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="keyLine2" edge="1" parent="1" source="key2" style="endArrow=classic;html=1;strokeWidth=1;dashed=1;" target="decrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bob" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Bob" vertex="1">
+          <mxGeometry height="100" width="50" x="900" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="plaintext2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Plaintext&#xa;&#39;HELLO&#39;" vertex="1">
+          <mxGeometry height="60" width="100" x="880" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4" edge="1" parent="1" source="decrypt" style="endArrow=classic;html=1;strokeWidth=2;" target="plaintext2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="⚠️ Problem: How to share the Key securely?" vertex="1">
+          <mxGeometry height="60" width="280" x="400" y="600" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="XSwo8xoubzdd34bADD7E" name="Asymmetric Encryption Diagram">
+    <mxGraphModel dx="1257" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" value="ASYMMETRIC ENCRYPTION (Public Key Cryptography)" vertex="1">
+          <mxGeometry height="40" width="600" x="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bob1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Bob" vertex="1">
+          <mxGeometry height="100" width="50" x="900" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="keygen" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Bob generates&#xa;Key Pair" vertex="1">
+          <mxGeometry height="60" width="120" x="760" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="publicKey" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="🔓 Public Key&#xa;(Share with everyone)" vertex="1">
+          <mxGeometry height="60" width="120" x="760" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="privateKey" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="🔐 Private Key&#xa;(Keep secret!)" vertex="1">
+          <mxGeometry height="60" width="120" x="900" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_keygen1" edge="1" parent="1" source="keygen" style="endArrow=classic;html=1;strokeWidth=2;" target="publicKey" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_keygen2" edge="1" parent="1" source="keygen" style="endArrow=classic;html=1;strokeWidth=2;" target="privateKey" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="alice" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Alice" vertex="1">
+          <mxGeometry height="100" width="50" x="120" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="plaintext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Plaintext&#xa;&#39;Secret Message&#39;" vertex="1">
+          <mxGeometry height="60" width="100" x="95" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="sendPubKey" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#9673a6;dashed=1;" value="Bob sends Public Key 🔓">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="270" />
+              <mxPoint x="280" y="270" />
+            </Array>
+            <mxPoint x="760" y="270" as="sourcePoint" />
+            <mxPoint x="280" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="encrypt" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Encrypt&#xa;with Bob&#39;s&#xa;Public Key 🔓" vertex="1">
+          <mxGeometry height="100" width="140" x="250" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_enc1" edge="1" parent="1" source="plaintext" style="endArrow=classic;html=1;strokeWidth=2;" target="encrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ciphertext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Ciphertext&#xa;&#39;X@7$Y#&#39;" vertex="1">
+          <mxGeometry height="60" width="100" x="480" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_enc2" edge="1" parent="1" source="encrypt" style="endArrow=classic;html=1;strokeWidth=2;" target="ciphertext" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sendCipher" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#b85450;" value="Send Ciphertext">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="580" y="550" as="sourcePoint" />
+            <mxPoint x="760" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="decrypt" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Decrypt&#xa;with Bob&#39;s&#xa;Private Key 🔐" vertex="1">
+          <mxGeometry height="100" width="140" x="780" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_dec1" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=2;" target="decrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="760" y="550" as="sourcePoint" />
+            <mxPoint x="780" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="plaintext2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Plaintext&#xa;&#39;Secret Message&#39;" vertex="1">
+          <mxGeometry height="60" width="100" x="970" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_dec2" edge="1" parent="1" source="decrypt" style="endArrow=classic;html=1;strokeWidth=2;" target="plaintext2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="✅ Only Bob can decrypt (he has Private Key 🔐)" vertex="1">
+          <mxGeometry height="60" width="340" x="380" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="✅ No need to share Private Key!" vertex="1">
+          <mxGeometry height="40" width="340" x="380" y="760" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tFMa0zqU07MheYoFjN__" name="PKI (Public Key Infrastructure) Architecture">
+    <mxGraphModel dx="1257" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="PKI - Public Key Infrastructure" vertex="1">
+          <mxGeometry height="40" width="400" x="360" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rootCA" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=3;" value="Root CA&#xa;(Certificate Authority)&#xa;🏛️" vertex="1">
+          <mxGeometry height="120" width="200" x="460" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="intCA1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Intermediate CA 1" vertex="1">
+          <mxGeometry height="60" width="140" x="240" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="intCA2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Intermediate CA 2" vertex="1">
+          <mxGeometry height="60" width="140" x="490" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="intCA3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Intermediate CA 3" vertex="1">
+          <mxGeometry height="60" width="140" x="740" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="root_int1" edge="1" parent="1" source="rootCA" style="endArrow=classic;html=1;strokeWidth=2;" target="intCA1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="root_int2" edge="1" parent="1" source="rootCA" style="endArrow=classic;html=1;strokeWidth=2;" target="intCA2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="root_int3" edge="1" parent="1" source="rootCA" style="endArrow=classic;html=1;strokeWidth=2;" target="intCA3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cert1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="🌐 Web Server&#xa;www.example.com" vertex="1">
+          <mxGeometry height="60" width="120" x="140" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="cert2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="📧 Email&#xa;user@example.com" vertex="1">
+          <mxGeometry height="60" width="120" x="280" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="cert3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="🔐 VPN Gateway" vertex="1">
+          <mxGeometry height="60" width="120" x="430" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="cert4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="📱 Mobile App" vertex="1">
+          <mxGeometry height="60" width="120" x="570" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="cert5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="🔌 IoT Device" vertex="1">
+          <mxGeometry height="60" width="120" x="710" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="cert6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="🖥️ User PC" vertex="1">
+          <mxGeometry height="60" width="120" x="850" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="int1_cert1" edge="1" parent="1" source="intCA1" style="endArrow=classic;html=1;strokeWidth=1;" target="cert1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="int1_cert2" edge="1" parent="1" source="intCA1" style="endArrow=classic;html=1;strokeWidth=1;" target="cert2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="int2_cert3" edge="1" parent="1" source="intCA2" style="endArrow=classic;html=1;strokeWidth=1;" target="cert3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="int2_cert4" edge="1" parent="1" source="intCA2" style="endArrow=classic;html=1;strokeWidth=1;" target="cert4" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="int3_cert5" edge="1" parent="1" source="intCA3" style="endArrow=classic;html=1;strokeWidth=1;" target="cert5" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="int3_cert6" edge="1" parent="1" source="intCA3" style="endArrow=classic;html=1;strokeWidth=1;" target="cert6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="chain" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Certificate Chain:&#xa;Root CA → Intermediate CA → End Entity Certificate" vertex="1">
+          <mxGeometry height="60" width="380" x="360" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="trust" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="🔐 Root CA is pre-installed in OS/Browser (Trusted)" vertex="1">
+          <mxGeometry height="40" width="380" x="360" y="680" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="HHbiZ8al0K7qZbw2C-FS" name="Digital Signature Process">
+    <mxGraphModel dx="1257" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="DIGITAL SIGNATURE WORKFLOW" vertex="1">
+          <mxGeometry height="40" width="500" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="signTitle" parent="1" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1" value="📝 SIGNING (Alice)" vertex="1">
+          <mxGeometry height="40" width="280" x="80" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="message1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Message&#xa;&#39;I agree to pay $100&#39;" vertex="1">
+          <mxGeometry height="60" width="200" x="120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="hash1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Hash Function&#xa;(SHA-256)" vertex="1">
+          <mxGeometry height="100" width="140" x="150" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_hash1" edge="1" parent="1" source="message1" style="endArrow=classic;html=1;strokeWidth=2;" target="hash1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hashValue" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Hash Value&#xa;&#39;a7f3b2...&#39;" vertex="1">
+          <mxGeometry height="60" width="160" x="140" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_hash2" edge="1" parent="1" source="hash1" style="endArrow=classic;html=1;strokeWidth=2;" target="hashValue" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sign" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Encrypt with&#xa;Alice&#39;s Private Key 🔐" vertex="1">
+          <mxGeometry height="100" width="160" x="140" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_sign" edge="1" parent="1" source="hashValue" style="endArrow=classic;html=1;strokeWidth=2;" target="sign" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="signature" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="✍️ Digital Signature&#xa;&#39;x7y2...&#39;" vertex="1">
+          <mxGeometry height="60" width="160" x="140" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_sig" edge="1" parent="1" source="sign" style="endArrow=classic;html=1;strokeWidth=2;" target="signature" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="send" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=4;strokeColor=#d79b00;" value="Send Message + Signature">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="360" y="400" as="sourcePoint" />
+            <mxPoint x="680" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="verifyTitle" parent="1" style="text;html=1;strokeColor=none;fillColor=#d5e8d4;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=16;fontStyle=1" value="✅ VERIFICATION (Bob)" vertex="1">
+          <mxGeometry height="40" width="280" x="720" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="receivedMsg" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Received Message&#xa;&#39;I agree to pay $100&#39;" vertex="1">
+          <mxGeometry height="60" width="200" x="760" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="receivedSig" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Received Signature&#xa;&#39;x7y2...&#39;" vertex="1">
+          <mxGeometry height="60" width="200" x="760" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="hash2" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Hash Function&#xa;(SHA-256)" vertex="1">
+          <mxGeometry height="100" width="140" x="620" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_hash3" edge="1" parent="1" source="receivedMsg" style="endArrow=classic;html=1;strokeWidth=2;" target="hash2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hashB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Hash B&#xa;&#39;a7f3b2...&#39;" vertex="1">
+          <mxGeometry height="60" width="160" x="610" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_hashB" edge="1" parent="1" source="hash2" style="endArrow=classic;html=1;strokeWidth=2;" target="hashB" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="decrypt" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Decrypt with&#xa;Alice&#39;s Public Key 🔓" vertex="1">
+          <mxGeometry height="100" width="160" x="880" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_decrypt" edge="1" parent="1" source="receivedSig" style="endArrow=classic;html=1;strokeWidth=2;" target="decrypt" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hashA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Hash A&#xa;&#39;a7f3b2...&#39;" vertex="1">
+          <mxGeometry height="60" width="160" x="880" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_hashA" edge="1" parent="1" source="decrypt" style="endArrow=classic;html=1;strokeWidth=2;" target="hashA" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="compare" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" value="Compare&#xa;Hash A == Hash B ?" vertex="1">
+          <mxGeometry height="100" width="180" x="740" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_compA" edge="1" parent="1" source="hashA" style="endArrow=classic;html=1;strokeWidth=2;" target="compare" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_compB" edge="1" parent="1" source="hashB" style="endArrow=classic;html=1;strokeWidth=2;" target="compare" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="valid" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="✅ Valid!&#xa;- Alice sent this&#xa;- Not modified" vertex="1">
+          <mxGeometry height="80" width="140" x="600" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="invalid" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="❌ Invalid!&#xa;- Tampered&#xa;- Wrong sender" vertex="1">
+          <mxGeometry height="80" width="140" x="920" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_valid" edge="1" parent="1" source="compare" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;" target="valid" value="Match">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_invalid" edge="1" parent="1" source="compare" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#b85450;" target="invalid" value="No Match">
+          <mxGeometry height="50" relative="1" width="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="PeIA7Dx5hAym0_8mDyDH" name="HTTPS/TLS Handshake">
+    <mxGraphModel dx="1257" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1" value="HTTPS / TLS HANDSHAKE (Hybrid Encryption)" vertex="1">
+          <mxGeometry height="40" width="600" x="280" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Browser / Client" vertex="1">
+          <mxGeometry height="60" width="180" x="120" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="server" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Web Server" vertex="1">
+          <mxGeometry height="60" width="180" x="820" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="line1" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#6c8ebf;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="210" y="180" as="sourcePoint" />
+            <mxPoint x="210" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="line2" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#6c8ebf;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="910" y="180" as="sourcePoint" />
+            <mxPoint x="910" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step1" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=2;" value="1. ClientHello&#xa;(Supported Ciphers)">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="210" y="220" as="sourcePoint" />
+            <mxPoint x="910" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step2" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=2;" value="2. ServerHello + Certificate&#xa;(Public Key + CA Signature)">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="910" y="280" as="sourcePoint" />
+            <mxPoint x="210" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="verify" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Verify Certificate" vertex="1">
+          <mxGeometry height="40" width="160" x="130" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="verifyOK" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="✅ Valid" vertex="1">
+          <mxGeometry height="30" width="100" x="160" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="genKey" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Generate Random&#xa;Session Key (AES)" vertex="1">
+          <mxGeometry height="50" width="160" x="130" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#d79b00;" value="3. Encrypt Session Key&#xa;with Server&#39;s Public Key 🔓">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="210" y="520" as="sourcePoint" />
+            <mxPoint x="910" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="decrypt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Decrypt Session Key&#xa;with Private Key 🔐" vertex="1">
+          <mxGeometry height="50" width="160" x="830" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="bothHaveKey" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" value="🔑 Both sides now have the same Session Key!" vertex="1">
+          <mxGeometry height="40" width="440" x="340" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#82b366;" value="4. Encrypted Data (AES-256)&#xa;Fast Symmetric Encryption ⚡">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="210" y="680" as="sourcePoint" />
+            <mxPoint x="910" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="step5" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#82b366;" value="5. Encrypted Response (AES-256)">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="910" y="730" as="sourcePoint" />
+            <mxPoint x="210" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="summary" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;" value="✅ Hybrid Encryption:&#xa;• Asymmetric (RSA) for Key Exchange (Steps 1-3)&#xa;• Symmetric (AES) for Data Transfer (Steps 4-5)" vertex="1">
+          <mxGeometry height="80" width="440" x="340" y="780" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
